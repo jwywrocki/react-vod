@@ -4,12 +4,18 @@
   "description": "react vod app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "backend": "nodemon index.js"
   },
   "author": "Jakub Wywrocki",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.17.1",
     "mongoose": "^5.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
