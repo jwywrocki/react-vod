@@ -10,6 +10,10 @@ const {
     User
 } = require('./models/user');
 
+const {
+    auth
+} = require('./middleware/auth');
+
 mongoose.connect(config.mogoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -23,9 +27,13 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 
-app.get('/', (req, res) => {
-    res.json({
-        "Hello ~": "Hi ~~ Jaqb"
+app.get("/api/user/auth", auth, (req, res) => {
+    res.status(200).json({
+        _id: req._id,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        role: req.user.role,
     })
 })
 
@@ -41,9 +49,9 @@ app.post('/api/users/register', (req, res) => {
         return res.status(200).json({
             success: true,
             userData: doc
-        })
-    })
-})
+        });
+    });
+});
 
 app.post('/api/user/login', (req, res) => {
     //find email
@@ -61,9 +69,9 @@ app.post('/api/user/login', (req, res) => {
                 return res.json({
                     loginSuccess: false,
                     message: "Passowrd did not match."
-                })
+                });
             }
-        })
+        });
         //generate token
         user.generateToken((err, user) => {
             if (err) return res.status(400).send(err);
@@ -71,10 +79,9 @@ app.post('/api/user/login', (req, res) => {
                 .status(200)
                 .json({
                     loginSuccess: true
-                })
-        })
+                });
+        });
     });
-
-})
+});
 
 app.listen(5000);
