@@ -34,19 +34,19 @@ app.get("/api/user/auth", auth, (req, res) => {
         email: req.user.email,
         name: req.user.name,
         role: req.user.role,
-    })
-})
+    });
+});
 
 
 app.post('/api/users/register', (req, res) => {
-    const user = new User(req.body)
+    const user = new User(req.body);
 
     user.save((err, doc) => {
         if (err) return res.json({
             success: false,
             err
-        })
-        return res.status(200).json({
+        });
+        res.status(200).json({
             success: true,
             userData: doc
         });
@@ -65,12 +65,11 @@ app.post('/api/user/login', (req, res) => {
             });
         //compare password
         user.comparePassword(req.body.password, (err, isMatch) => {
-            if (!isMatch) {
+            if (!isMatch)
                 return res.json({
                     loginSuccess: false,
-                    message: "Passowrd did not match."
+                    message: "Passowrd did not match"
                 });
-            }
         });
         //generate token
         user.generateToken((err, user) => {
@@ -80,6 +79,22 @@ app.post('/api/user/login', (req, res) => {
                 .json({
                     loginSuccess: true
                 });
+        });
+    });
+});
+
+app.get("/api/user/logout", auth, (req, res) => {
+    User.findOneAndUpdate({
+        _id: req.user._id
+    }, {
+        token: ""
+    }, (err, doc) => {
+        if (err) return res.json({
+            success: false,
+            err
+        })
+        return res.status(200).send({
+            success: true
         });
     });
 });
