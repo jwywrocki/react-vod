@@ -14,7 +14,7 @@ const {
     auth
 } = require('./middleware/auth');
 
-mongoose.connect(config.mogoURI, {
+mongoose.connect(config.mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => console.log('DB connected'))
