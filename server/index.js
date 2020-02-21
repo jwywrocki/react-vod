@@ -6,18 +6,14 @@ const cookieParser = require('cookie-parser');
 
 const config = require('./config/key');
 
-const {
-    User
-} = require('./models/user');
+const { User } = require('./models/user');
 
-const {
-    auth
-} = require('./middleware/auth');
+const { auth } = require('./middleware/auth');
 
 mongoose.connect(config.mongoURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }).then(() => console.log('DB connected'))
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('DB connected'))
     .catch(err => console.error(err));
 
 app.use(bodyParser.urlencoded({
