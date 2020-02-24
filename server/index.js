@@ -13,7 +13,8 @@ const { auth } = require('./middleware/auth');
 mongoose.connect(config.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log('DB connected'))
+})
+    .then(() => console.log('DB connected'))
     .catch(err => console.error(err));
 
 app.use(bodyParser.urlencoded({
@@ -23,10 +24,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-    res.json({
-        "hello": "My first deploy."
-    })
-})
+    res.json({ "hello": "My first deploy." });
+});
 
 app.get("/api/user/auth", auth, (req, res) => {
     res.status(200).json({
@@ -43,10 +42,7 @@ app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
 
     user.save((err, doc) => {
-        if (err) return res.json({
-            success: false,
-            err
-        });
+        if (err) return res.json({ success: false, err });
         res.status(200).json({
             success: true,
             userData: doc
@@ -56,9 +52,7 @@ app.post('/api/users/register', (req, res) => {
 
 app.post('/api/user/login', (req, res) => {
     //find email
-    User.findOne({
-        email: req.body.email
-    }, (err, user) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
@@ -75,7 +69,8 @@ app.post('/api/user/login', (req, res) => {
         //generate token
         user.generateToken((err, user) => {
             if (err) return res.status(400).send(err);
-            res.cookie("vod_auth", user.token)
+            res
+                .cookie("vod_auth", user.token)
                 .status(200)
                 .json({
                     loginSuccess: true
@@ -85,11 +80,7 @@ app.post('/api/user/login', (req, res) => {
 });
 
 app.get("/api/user/logout", auth, (req, res) => {
-    User.findOneAndUpdate({
-        _id: req.user._id
-    }, {
-        token: ""
-    }, (err, doc) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
         if (err) return res.json({
             success: false,
             err
