@@ -22,10 +22,10 @@ const userSchema = mongoose.Schema({
         default: 0
     },
     token: {
-        type: String
+        type: String,
     },
     tokenExp: {
-        type: Number
+        type: Number,
     }
 })
 
@@ -35,11 +35,10 @@ userSchema.pre('save', function (next) {
     if (user.isModified('password')) {
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) return next(err);
-
             bcrypt.hash(user.password, salt, function (err, hash) {
                 if (err) return next(err);
-                user.password = hash;
-                next();
+                user.password = hash
+                next()
             })
         })
     } else {
@@ -56,11 +55,11 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 
 userSchema.methods.generateToken = function (cb) {
     var user = this;
-    var token = jwt.sign(user._id.toHexString(), 'secret');
+    var token = jwt.sign(user._id.toHexString(), 'secret')
 
     user.token = token;
     user.save(function (err, user) {
-        if (err) return cb(err);
+        if (err) return cb(err)
         cb(null, user);
     })
 }
@@ -69,10 +68,7 @@ userSchema.statics.findByToken = function (token, cb) {
     var user = this;
 
     jwt.verify(token, 'secret', function (err, decode) {
-        user.findOne({
-            "_id": decode,
-            "token": token
-        }, function (err, user) {
+        user.findOne({ "_id": decode, "token": token }, function (err, user) {
             if (err) return cb(err);
             cb(null, user);
         })
@@ -81,6 +77,4 @@ userSchema.statics.findByToken = function (token, cb) {
 
 const User = mongoose.model('User', userSchema)
 
-module.exports = {
-    User
-}
+module.exports = { User }

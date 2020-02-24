@@ -12,6 +12,8 @@ import ReduxThunk from 'redux-thunk';
 
 import Reducer from './reducers';
 
+import 'materialize-css/dist/css/materialize.min.css';
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 
 ReactDOM.render(
