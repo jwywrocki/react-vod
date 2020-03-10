@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
     const user = new User(req.body);
 
     user.save((error, doc) => {
-        if (error) return res.json({ success: false, error });
+        if (error) return res.json({ success: false, message: "Taki użytkownik już istnieje" });
         return res.status(200).json({
             success: true,
         });

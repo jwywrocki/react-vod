@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
-    "http-proxy-middleware": "^1.0.0",
     "nodemon": "^2.0.2"
   }
 }
