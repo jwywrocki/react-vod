@@ -3,8 +3,8 @@ const { User } = require('../models/user');
 let auth = (req, res, next) => {
     let token = req.cookies.vod_auth;
 
-    User.findByToken(token, (err, user) => {
-        if (err) throw err;
+    User.findByToken(token, (error, user) => {
+        if (error) throw error;
         if (!user)
             return res.json({
                 isAuth: false,

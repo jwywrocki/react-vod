@@ -1,23 +1,25 @@
 const express = require('express');
-const app = express();
-const cors = require('cors');
-const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const path = require('path');
 
 const config = require('./config/key');
 
 const mongoose = require('mongoose');
 
-const connect = mongoose.connect(config.mongoURI,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        seCreateIndex: true,
-        useFindAndModify: false
-    })
+const mongoOptiopns =
+{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+};
+mongoose.connect(config.mongoURI, mongoOptiopns)
     .then(() => console.log('Połączono z MongoDB'))
-    .catch(err => console.log(err));
+    .catch(error => console.log(error));
+
+const app = express();
 
 app.use(cors());
 

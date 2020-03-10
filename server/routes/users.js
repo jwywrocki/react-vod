@@ -19,8 +19,8 @@ router.get("/auth", auth, (req, res) => {
 router.post('/register', (req, res) => {
     const user = new User(req.body);
 
-    user.save((err, doc) => {
-        if (err) return res.json({ success: false, err });
+    user.save((error, doc) => {
+        if (error) return res.json({ success: false, error });
         return res.status(200).json({
             success: true,
         });
@@ -28,20 +28,20 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email }, (err, user) => {
+    User.findOne({ email: req.body.email }, (error, user) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
-                message: "Błędny adres email"
+                message: "Nieprawidłowy adres email"
             });
-        user.comparePassword(req.body.password, (err, isMatch) => {
+        user.comparePassword(req.body.password, (error, isMatch) => {
             if (!isMatch)
                 return res.json({
                     loginSuccess: false,
-                    message: "Błędne hasło"
+                    message: "Nieprawidłowe hasło"
                 });
-            user.generateToken((err, user) => {
-                if (err) return res.status(400).send(err);
+            user.generateToken((error, user) => {
+                if (error) return res.status(400).send(error);
                 res.cookie("vod_authExp", user.tokenExp);
                 res
                     .cookie("vod_auth", user.token)
@@ -56,10 +56,10 @@ router.post('/login', (req, res) => {
 });
 
 router.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
-        if (err) return res.json({
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (error, doc) => {
+        if (error) return res.json({
             success: false,
-            err
+            error
         });
         return res.status(200).send({
             success: true
