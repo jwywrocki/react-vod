@@ -4,12 +4,9 @@ import * as Yup from 'yup';
 import { registerUser } from "../../actions/user_actions";
 import { useDispatch } from "react-redux";
 
-import {
-  Form,
-  Input,
-  Button,
-} from 'antd';
+import { Form, Input, Button, Typography } from 'antd';
 
+const { Title } = Typography;
 
 function Register(props) {
   const dispatch = useDispatch();
@@ -68,7 +65,7 @@ function Register(props) {
         } = props;
         return (
           <div className="app">
-            <h2>Zarejestruj się</h2>
+            <Title level={2}>Zarejestruj się</Title>
             <Form style={{ minWidth: '375px' }} onSubmit={handleSubmit} >
 
               <Form.Item required>
@@ -140,7 +137,7 @@ function Register(props) {
               </Form.Item>
 
               <Form.Item>
-                <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button onClick={handleSubmit} type="primary" style={{ minWidth: '100%' }} disabled={isSubmitting}>
                   Zarejestruj
                 </Button>
               </Form.Item>

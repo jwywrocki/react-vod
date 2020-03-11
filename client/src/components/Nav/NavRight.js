@@ -19,19 +19,19 @@ function NavRight(props) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="mail">
+      <Menu mode={props.mode} style={{ borderStyle: 'none', backgroundColor: '#001529' }}>
+        <Menu.Item key="mail" style={{ height: '40px' }}>
           <a href="/login">Zaloguj</a>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item key="app" style={{ height: '40px' }}>
           <a href="/register">Zarejestruj</a>
         </Menu.Item>
       </Menu>
     )
   } else {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
+      <Menu mode={props.mode} style={{ borderStyle: 'none', backgroundColor: '#001529' }}>
+        <Menu.Item key="logout" style={{ height: '40px' }}>
           <a onClick={logoutHandler}>Wyloguj</a>
         </Menu.Item>
       </Menu>
