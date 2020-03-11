@@ -28,14 +28,16 @@ function Login(props) {
         email: '', //memorizedEmial
         password: '',
       }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email('Podaj prawidłowy adres e-mail')
-          .required('Adres e-mail jest wymagany'),
-        password: Yup.string()
-          .min(5, 'Hasło musi zawierać conajmniej 5 znaków')
-          .required('Hasło jest wymagane'),
-      })}
+      validationSchema={
+        Yup.object().shape({
+          email: Yup.string()
+            .email('Podaj prawidłowy adres e-mail')
+            .required('Adres e-mail jest wymagany'),
+          password: Yup.string()
+            .min(5, 'Hasło musi zawierać conajmniej 5 znaków')
+            .required('Hasło jest wymagane'),
+        })
+      }
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
@@ -65,7 +67,8 @@ function Login(props) {
             });
           setSubmitting(false);
         }, 500);
-      }}
+      }
+      }
     >
       {props => {
         const {
@@ -101,8 +104,8 @@ function Login(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required>
-                <Input
+              <Form.Item required hasFeedback>
+                <Input.Password
                   id="password"
                   prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Hasło"
@@ -110,6 +113,7 @@ function Login(props) {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  allowClear
                   className={
                     errors.password && touched.password ? 'text-input error' : 'text-input'
                   }
@@ -139,7 +143,7 @@ function Login(props) {
           </div>
         );
       }}
-    </Formik>
+    </Formik >
   );
 };
 

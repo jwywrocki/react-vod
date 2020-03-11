@@ -85,7 +85,7 @@ function Register(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
+              <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
                   placeholder="E-mail"
@@ -103,7 +103,7 @@ function Register(props) {
               </Form.Item>
 
               <Form.Item required hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
-                <Input
+                <Input.Password
                   id="password"
                   placeholder="Hasło"
                   type="password"
@@ -114,13 +114,15 @@ function Register(props) {
                     errors.password && touched.password ? 'text-input error' : 'text-input'
                   }
                 />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
+                <div className="input-feedback">
+                  {errors.password && touched.password && (
+                    <div>{errors.password}</div>
+                  )}
+                </div>
               </Form.Item>
 
               <Form.Item required hasFeedback>
-                <Input
+                <Input.Password
                   id="confirmPassword"
                   placeholder="Potwierdź hasło"
                   type="password"
