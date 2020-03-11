@@ -22,7 +22,7 @@ export default function (ComposedClass, reload) {
                 }
             })
 
-        }, [])
+        })
 
         return (
             <ComposedClass {...props} user={user} />

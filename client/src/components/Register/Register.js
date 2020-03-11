@@ -5,6 +5,7 @@ import { registerUser } from "../../actions/user_actions";
 import { useDispatch } from "react-redux";
 
 import { Form, Input, Button, Typography } from 'antd';
+import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -68,9 +69,10 @@ function Register(props) {
             <Title level={2}>Zarejestruj się</Title>
             <Form style={{ minWidth: '375px' }} onSubmit={handleSubmit} >
 
-              <Form.Item required>
+              <Form.Item required validateStatus={errors.name && touched.name ? "error" : 'success'}>
                 <Input
                   id="name"
+                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="Nazwa użytkownika"
                   type="text"
                   value={values.name}
@@ -88,6 +90,7 @@ function Register(props) {
               <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
+                  prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="E-mail"
                   type="email"
                   value={values.email}
@@ -102,14 +105,16 @@ function Register(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
+              <Form.Item required validateStatus={errors.password && touched.password ? "error" : 'success'}>
                 <Input.Password
                   id="password"
+                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="Hasło"
                   type="password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  allowClear
                   className={
                     errors.password && touched.password ? 'text-input error' : 'text-input'
                   }
@@ -121,14 +126,16 @@ function Register(props) {
                 </div>
               </Form.Item>
 
-              <Form.Item required hasFeedback>
+              <Form.Item required validateStatus={errors.confirmPassword && touched.confirmPassword ? "error" : 'success'}>
                 <Input.Password
                   id="confirmPassword"
+                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="Potwierdź hasło"
                   type="password"
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  allowClear
                   className={
                     errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
                   }

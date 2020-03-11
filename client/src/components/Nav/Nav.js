@@ -21,7 +21,7 @@ function Nav() {
 
       <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
         <div className="menu__logo">
-          <a href="/"><img src='pixie1.png' height="50px"></img></a>
+          <a href="/"><img src='pixie1.png' height="50px" alt="Logo"></img></a>
         </div>
         <div className="menu__container">
           <div className="menu_left">

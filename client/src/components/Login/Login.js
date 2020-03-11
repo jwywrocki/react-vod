@@ -4,7 +4,7 @@ import { loginUser } from "../../actions/user_actions";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Input, Button, Checkbox, Typography } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 
 const { Title } = Typography;
@@ -20,7 +20,7 @@ function Login(props) {
     setRememberMe(!rememberMe)
   };
 
-  const memorizedEmial = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  //const memorizedEmial = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
 
   return (
     <Formik
@@ -85,11 +85,13 @@ function Login(props) {
 
             <Title level={2}>Zaloguj się</Title>
             <form onSubmit={handleSubmit} style={{ width: '350px' }}>
-
-              <Form.Item required>
+              {formErrorMessage && (
+                <label ><p style={{ color: 'red', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
+              )}
+              <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
-                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="E-mail"
                   type="email"
                   value={values.email}
@@ -104,10 +106,10 @@ function Login(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required hasFeedback>
+              <Form.Item required validateStatus={errors.password && touched.password ? "error" : 'success'}>
                 <Input.Password
                   id="password"
-                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
                   placeholder="Hasło"
                   type="password"
                   value={values.password}
@@ -123,9 +125,6 @@ function Login(props) {
                 )}
               </Form.Item>
 
-              {formErrorMessage && (
-                <label ><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>
-              )}
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Zapamiętaj mnie</Checkbox>
