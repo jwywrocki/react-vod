@@ -86,7 +86,7 @@ function Login(props) {
             <Title level={2}>Zaloguj się</Title>
             <form onSubmit={handleSubmit} style={{ width: '350px' }}>
               {formErrorMessage && (
-                <label ><p style={{ color: 'red', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
+                <label ><p style={{ color: '#f5222d', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
               )}
               <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input

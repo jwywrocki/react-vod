@@ -26,15 +26,22 @@
   float: right;
   height: 45px;
   margin: 5px;
+  font-size: 18px;
   display: none !important;
   background: #1890FF;
+  border: none;
 }
 
 .menu_drawer .ant-drawer-body {
-  padding: 0 !important;
+  padding: 5px !important;
   background-color: #001529;
   border-bottom: solid 4px #1890FF;
 }
+
+.menu_drawer a {
+  color: #A6ADB4;
+}
+
 
 @media (max-width: 767px) {
 
