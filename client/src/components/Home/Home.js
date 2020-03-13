@@ -30,8 +30,8 @@ function Home() {
     }
 
     return (
-        <div style={{ width: '100%', margin: 0 }}>
-            <div style={{ width: '85%', margin: '60px auto' }}>
+        <div style={{ width: '100%', margin: '0' }}>
+            <div style={{ width: '90%', margin: '60px auto' }}>
                 <Title level={2}>Popularne filmy</Title>
                 <hr />
                 <Row gutter={[16, 16]}>
