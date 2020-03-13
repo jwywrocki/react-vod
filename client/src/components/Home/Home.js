@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { API_KEY, API_URL, IMAGE_URL } from '../Config'
-
 import { Typography, Row } from 'antd';
-import List from './List';
+
+import MovieList from './MovieList';
+
+
 const { Title } = Typography;
 
 function Home() {
@@ -37,9 +39,14 @@ function Home() {
                 <Row gutter={[16, 16]}>
                     {Movies && Movies.map((movie, index) => (
                         <React.Fragment key={index}>
-                            <List
+                            <MovieList
                                 image={movie.poster_path && `${IMAGE_URL}w500${movie.poster_path}`}
                                 movieId={movie.id}
+                                movieTitle={movie.original_title}
+                                moviePop={movie.popularity}
+                                movieRateC={movie.vote_count}
+                                movieRate={movie.vote_average}
+                                movieDate={movie.release_date}
                             />
                         </React.Fragment>
                     ))}

@@ -7,7 +7,7 @@ function BackImage(props) {
         <div
             style={{
                 background:
-                    `linear-gradient(to bottom,
+                    `linear-gradient(to bottom left,
                     rgba(0,0,0,.5) 33%,
                     rgba(0,0,0,.75) 66%,
                     rgba(0,0,0,1) 100%),
