@@ -1,57 +1,110 @@
-import React, { useState } from 'react';
-import NavLeft from './NavLeft';
-import NavRight from './NavRight';
-import { Menu, Drawer, Button } from 'antd';
-import { BarsOutlined } from '@ant-design/icons';
-import './styles.css';
+import React from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-function Nav() {
-  const [visible, setVisible] = useState(false)
+import { AppBar, Button, Typography, Link, Toolbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-  const showDrawer = () => {
-    setVisible(true)
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+  },
+  appBar: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    justifyContent: "center",
+  },
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  logo: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '50px',
+  },
+  toolbarTitle: {
+    flexGrow: 0,
+  },
+  link: {
+    margin: theme.spacing(1, 1),
+  },
+  btn: {
+    position: 'absolute',
+    top: '5px',
+    right: '10px',
+    margin: theme.spacing(1, 1),
+  },
+  btn1: {
+    position: 'absolute',
+    top: '5px',
+    right: '150px',
+    margin: theme.spacing(1, 1),
+  }
+}));
+
+function Nav(props) {
+  const user = useSelector(state => state.user);
+  const classes = useStyles();
+
+  const logoutHandler = () => {
+    axios.get(`api/users/logout`).then(response => {
+      if (response.status === 200) {
+        props.history.push('/login');
+      } else {
+        alert('Wylogowanie nie powiodło się');
+      };
+    });
   };
-
-  const onClose = () => {
-    setVisible(false)
-  };
-
-  return (
-    <Menu theme="dark">
-
-      <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
-        <div className="menu__logo">
-          <a href="/"><img src='../pixie1.png' height="50px" alt="Logo"></img></a>
-        </div>
-        <div className="menu__container">
-          <div className="menu_left">
-            <NavLeft mode="horizontal" />
-          </div>
-          <div className="menu_rigth">
-            <NavRight mode="horizontal" />
-          </div>
-          <Button
-            className="menu__mobile-button"
-            type="primary"
-            onClick={showDrawer}
-          >
-            <BarsOutlined />
+  if (user.userData && !user.userData.isAuth) {
+    return (
+      <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            <a href="/"><img src='../pixie1.png' className={classes.logo} alt="Logo"></img></a>
+          </Typography>
+          <nav>
+            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+              Filmy
+            </Link>
+            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+              Seriale
+            </Link>
+          </nav>
+          <Button href="/login" color="primary" variant="outlined" className={classes.btn1}>
+            Zaloguj
           </Button>
-          <Drawer
-            title=""
-            placement="right"
-            className="menu_drawer"
-            closable={false}
-            onClose={onClose}
-            visible={visible}
-          >
-            <NavLeft mode="inline" />
-            <NavRight mode="inline" />
-          </Drawer>
-        </div>
-      </nav>
-    </Menu>
-  )
-}
+          <Button href="/register" color="primary" variant="outlined" className={classes.btn}>
+            Zarejestruj
+          </Button>
+        </Toolbar>
+      </AppBar>
+    );
+  } else {
+    return (
+      <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            <a href="/"><img src='../pixie1.png' className={classes.logo} alt="Logo"></img></a>
+          </Typography>
+          <nav>
+            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+              Filmy
+            </Link>
+            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+              Seriale
+            </Link>
+          </nav>
+          <Button onClick={logoutHandler} color="primary" variant="outlined" className={classes.btn}>
+            Wyloguj
+          </Button>
+        </Toolbar>
+      </AppBar>
+    );
+  };
+};
 
-export default Nav
+export default withRouter(Nav);

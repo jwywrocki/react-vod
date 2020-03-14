@@ -1,18 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../actions/user_actions";
-import { useDispatch } from "react-redux";
 
-import { Form, Input, Button, Typography } from 'antd';
-import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import {
+  Avatar, Button, Link, Grid, Typography,
+  CssBaseline, TextField, Container, InputAdornment
+} from '@material-ui/core';
+import { LockOutlined, Person, Email, Lock } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 
-const { Title } = Typography;
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(12),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  ico: {
+    color: theme.palette.primary.main,
+    opacity: .75
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 function Register(props) {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  return (
 
+  const [formErrorMessage, setFormErrorMessage] = useState('');
+
+  return (
     <Formik
       initialValues={{
         email: '',
@@ -46,12 +75,17 @@ function Register(props) {
             if (response.payload.success) {
               props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg)
+              setFormErrorMessage(response.payload.message);
             }
           })
-
+            .catch(error => {
+              setFormErrorMessage('Użytkownik o podanej nazwie lub adresie email już istnieje');
+              setTimeout(() => {
+                setFormErrorMessage("");
+              }, 3000);
+            });
           setSubmitting(false);
-        }, 500);
+        }, 0);
       }}
     >
       {props => {
@@ -64,98 +98,148 @@ function Register(props) {
           handleBlur,
           handleSubmit,
         } = props;
+
         return (
-          <div className="app">
-            <Title level={2}>Zarejestruj się</Title>
-            <Form style={{ minWidth: '375px' }} onSubmit={handleSubmit} >
-
-              <Form.Item required validateStatus={errors.name && touched.name ? "error" : 'success'}>
-                <Input
-                  id="name"
-                  prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="Nazwa użytkownika"
-                  type="text"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.name && touched.name ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
-                <Input
-                  id="email"
-                  prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="E-mail"
-                  type="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required validateStatus={errors.password && touched.password ? "error" : 'success'}>
-                <Input.Password
-                  id="password"
-                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="Hasło"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  allowClear
-                  className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
-                  }
-                />
-                <div className="input-feedback">
-                  {errors.password && touched.password && (
-                    <div>{errors.password}</div>
-                  )}
-                </div>
-              </Form.Item>
-
-              <Form.Item required validateStatus={errors.confirmPassword && touched.confirmPassword ? "error" : 'success'}>
-                <Input.Password
-                  id="confirmPassword"
-                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="Potwierdź hasło"
-                  type="password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  allowClear
-                  className={
-                    errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <div className="input-feedback">{errors.confirmPassword}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item>
-                <Button onClick={handleSubmit} type="primary" style={{ minWidth: '100%' }} disabled={isSubmitting}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlined />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Zarejestruj się
+              </Typography>
+              <form onSubmit={handleSubmit} className={classes.form}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    {formErrorMessage && (
+                      <label ><p style={{ color: '#f5222d', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
+                    )}
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Nazwa użytkownika"
+                      placeholder="Nazwa użytkownika"
+                      value={values.name}
+                      onChange={handleChange}
+                      classes={errors.name && touched.name ? 'text-input error' : 'text-input'}
+                      autoComplete="name"
+                      autoFocus
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" className={classes.ico}>
+                            <Person />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onBlur={handleBlur}
+                      error={errors.name && touched.name}
+                      helperText={(errors.name && touched.name) ? errors.name : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="E-mail"
+                      type="email"
+                      placeholder="E-mail"
+                      value={values.email}
+                      onChange={handleChange}
+                      classes={errors.email && touched.email ? 'text-input error' : 'text-input'}
+                      autoComplete="email"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" className={classes.ico}>
+                            <Email />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onBlur={handleBlur}
+                      error={errors.email && touched.email}
+                      helperText={(errors.email && touched.email) ? errors.email : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="password"
+                      label="Hasło"
+                      type="password"
+                      placeholder="Hasło"
+                      value={values.password}
+                      onChange={handleChange}
+                      classes={errors.password && touched.password ? 'text-input error' : 'text-input'}
+                      autoComplete="current-password"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" className={classes.ico}>
+                            <Lock />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onBlur={handleBlur}
+                      error={errors.password && touched.password}
+                      helperText={(errors.password && touched.password) ? errors.password : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="confirmPassword"
+                      label="Potwierdź hasło"
+                      type="password"
+                      placeholder="Potwierdź hasło"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                      classes={errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'}
+                      autoComplete="current-password"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start" className={classes.ico}>
+                            <Lock />
+                          </InputAdornment>
+                        ),
+                      }}
+                      onBlur={handleBlur}
+                      error={errors.confirmPassword && touched.confirmPassword}
+                      helperText={(errors.confirmPassword && touched.confirmPassword) ? errors.confirmPassword : ''}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                >
                   Zarejestruj
                 </Button>
-              </Form.Item>
-            </Form>
-          </div>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link href="/login" variant="body2">
+                      Posiadasz konto? Zaloguj się
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
         );
       }}
     </Formik>
   );
 };
 
-export default Register
+export default Register;

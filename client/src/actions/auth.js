@@ -9,24 +9,22 @@ export default function (ComposedClass, reload) {
         const dispatch = useDispatch();
 
         useEffect(() => {
-
-            dispatch(auth()).then(response => {
-                if (!response.payload.isAuth) {
+            dispatch(auth()).then(async response => {
+                if (await !response.payload.isAuth) {
                     if (reload) {
-                        props.history.push('/login')
-                    }
+                        props.history.push('/login');
+                    };
                 } else {
                     if (reload === false) {
-                        props.history.push('/')
-                    }
-                }
-            })
-
-        })
+                        props.history.push('/');
+                    };
+                };
+            });
+        });
 
         return (
             <ComposedClass {...props} user={user} />
-        )
-    }
-    return AuthenticationCheck
-}
+        );
+    };
+    return AuthenticationCheck;
+};

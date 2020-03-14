@@ -1,31 +1,51 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "../../actions/user_actions";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Input, Button, Checkbox, Typography } from 'antd';
-import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import { useDispatch } from "react-redux";
+import { loginUser } from "../../actions/user_actions";
 
-const { Title } = Typography;
+import {
+  Avatar, Button, Link, Grid, Typography,
+  CssBaseline, TextField, Container, InputAdornment
+} from '@material-ui/core';
+import { LockOutlined, Email, Lock } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(12),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  ico: {
+    color: theme.palette.primary.main,
+    opacity: .75
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 function Login(props) {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
 
-  const [formErrorMessage, setFormErrorMessage] = useState('')
-  const [rememberMe, setRememberMe] = useState(rememberMeChecked)
-
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe)
-  };
-
-  //const memorizedEmial = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  const [formErrorMessage, setFormErrorMessage] = useState('');
 
   return (
     <Formik
       initialValues={{
-        email: '', //memorizedEmial
+        email: '',
         password: '',
       }}
       validationSchema={
@@ -49,26 +69,20 @@ function Login(props) {
             .then(response => {
               if (response.payload.loginSuccess) {
                 window.localStorage.setItem('userId', response.payload.userId);
-                if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
-                } else {
-                  localStorage.removeItem('rememberMe');
-                }
                 props.history.push("/");
               } else {
-                setFormErrorMessage('Twój adres e-mail lub hasło mogą być niepoprawne')
+                setFormErrorMessage(response.payload.message);
               }
             })
-            .catch(err => {
-              setFormErrorMessage('Twój adres e-mail lub hasło mogą być niepoprawne')
+            .catch(error => {
+              setFormErrorMessage('Twój adres e-mail lub hasło mogą być niepoprawne');
               setTimeout(() => {
-                setFormErrorMessage("")
+                setFormErrorMessage("");
               }, 3000);
             });
           setSubmitting(false);
-        }, 500);
-      }
-      }
+        }, 0);
+      }}
     >
       {props => {
         const {
@@ -80,66 +94,95 @@ function Login(props) {
           handleBlur,
           handleSubmit,
         } = props;
-        return (
-          <div className="app">
 
-            <Title level={2}>Zaloguj się</Title>
-            <form onSubmit={handleSubmit} style={{ width: '350px' }}>
-              {formErrorMessage && (
-                <label ><p style={{ color: '#f5222d', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
-              )}
-              <Form.Item required validateStatus={errors.email && touched.email ? "error" : 'success'}>
-                <Input
+        return (
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlined />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Zaloguj się
+              </Typography>
+              <form onSubmit={handleSubmit} className={classes.form}>
+                {formErrorMessage && (
+                  <label ><p style={{ color: '#f5222d', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
+                )}
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
                   id="email"
-                  prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="E-mail"
+                  label="E-mail"
                   type="email"
+                  placeholder="E-mail"
                   value={values.email}
                   onChange={handleChange}
+                  autoComplete="email"
+                  autoFocus
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start" className={classes.ico}>
+                        <Email />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
-                  }
+                  error={errors.email && touched.email}
+                  helperText={(errors.email && touched.email) ? errors.email : ''}
                 />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required validateStatus={errors.password && touched.password ? "error" : 'success'}>
-                <Input.Password
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
                   id="password"
-                  prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.40)' }} />}
-                  placeholder="Hasło"
+                  label="Hasło"
                   type="password"
+                  placeholder="Hasło"
                   value={values.password}
                   onChange={handleChange}
+                  autoComplete="current-password"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start" className={classes.ico}>
+                        <Lock />
+                      </InputAdornment>
+                    ),
+                  }}
                   onBlur={handleBlur}
-                  allowClear
-                  className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
-                  }
+                  error={errors.password && touched.password}
+                  helperText={(errors.password && touched.password) ? errors.password : ''}
                 />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
-              </Form.Item>
-
-
-              <Form.Item>
-                <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Zapamiętaj mnie</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
-                  Nie pamiętasz hasła?
-                  </a>
-                <div>
-                  <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
-                    Zaloguj
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={isSubmitting}
+                  onSubmit={handleSubmit}
+                  htmlType="submit"
+                >
+                  Zaloguj
                 </Button>
-                </div>
-                <a href="/register">Stwórz konto</a>
-              </Form.Item>
-            </form>
-          </div>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="/reset_user" variant="body2">
+                      Nie pamiętasz hasła?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"Nie posiadasz konta? Zarejestruj się"};
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
         );
       }}
     </Formik >

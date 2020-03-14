@@ -8,22 +8,22 @@ import {
 
 export function registerUser(dataToSubmit) {
     const request = axios.post('/api/users/register', dataToSubmit)
-        .then(response => response.data)
+        .then(response => response.data);
 
     return {
         type: REGISTER_USER,
         payload: request
-    }
+    };
 };
 
 export function loginUser(dataToSubmit) {
     const request = axios.post('/api/users/login', dataToSubmit)
-        .then(response => response.data)
+        .then(response => response.data);
 
     return {
         type: LOGIN_USER,
         payload: request
-    }
+    };
 };
 
 export function auth() {
@@ -33,8 +33,8 @@ export function auth() {
     return {
         type: AUTH_USER,
         payload: request
-    }
-}
+    };
+};
 
 export function logoutUser() {
     const request = axios.get(`/api/users/logout`)
@@ -43,5 +43,5 @@ export function logoutUser() {
     return {
         type: LOGOUT_USER,
         payload: request
-    }
-}
+    };
+};

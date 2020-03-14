@@ -25,6 +25,6 @@ function App() {
       <Footer />
     </Suspense>
   );
-}
+};
 
 export default App;
