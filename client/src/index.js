@@ -17,14 +17,14 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)
 ReactDOM.render(
     <Provider store={
         createStoreWithMiddleware(
-            Reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-    }>
+            Reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        )}>
 
         <BrowserRouter>
             <App />
         </BrowserRouter>
 
-    </Provider >,
+    </Provider>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

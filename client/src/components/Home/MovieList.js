@@ -1,37 +1,64 @@
 import React from 'react';
-import { Col, Card, Descriptions } from 'antd';
+import {
+    CardActionArea, CardMedia, Button, Typography, Grid,
+    Card, CardActions, CardContent,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const { Meta } = Card;
+const useStyles = makeStyles(theme => ({
+    root: {
+        margin: '0 auto',
+        display: 'flex',
+        maxWidth: '450px',
+        flexGrow: 1,
+    },
+    details: {
+        display: 'flex',
+        padding: theme.spacing(1),
+        maxWidth: '483px',
+        flexDirection: 'column',
+    },
+    media: {
+        width: '185px',
+        height: '278px',
+    },
+}));
 
 function MovieList(props) {
+    const classes = useStyles();
+
     return (
-        <Col lg={6} md={8} xs={24}>
-
-            <Card
-                hoverable
-                style={{ width: '240px' }}
-                cover={<img alt='img' src={props.image} />}
-                extra={<a href={`/movie/${props.movieId}`}></a>}
-            >
-                <Meta
-                    title={props.movieTitle}
-                    description={
-                        <Descriptions size='small'>
-                            <Descriptions.Item label='Popularność: '>{props.moviePop}</Descriptions.Item>
-                            <Descriptions.Item label='Głosów: '>{props.movieRateC}</Descriptions.Item>
-                            <Descriptions.Item label='Ocena: '>{props.movieRate}</Descriptions.Item>
-                            <Descriptions.Item label='Publikacja: '>{props.movieDate}</Descriptions.Item>
-                        </Descriptions>
-                    }
-                />
-            </Card>,
-            {/* <div style={{ position: 'relative' }}>
-                <a href={`/movie/${props.movieId}`}>
-                    <img style={{ height: '320px' }} alt='img' src={props.image} />
-                </a>
-
-            </div> */}
-        </Col>
+        <Grid item sm={12} md={6} xl={3}>
+            <Card className={classes.root} raised>
+                <CardActionArea className={classes.media}>
+                    <CardMedia
+                        component='img'
+                        width='185px'
+                        height='278px'
+                        image={props.image}
+                        title={props.movieTitle}
+                    />
+                </CardActionArea>
+                <div className={classes.details}>
+                    <CardContent>
+                        <Typography gutterBottom variant="h6" component="h2">
+                            {props.movieTitle}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Popularność: {props.moviePop}<br />
+                        Głosów: {props.movieRateC}<br />
+                        Ocena: {props.movieRate}<br />
+                        Publikacja: {props.movieDate}
+                        </Typography>
+                        <CardActions className={classes.content}>
+                            <Button href={`/movie/${props.movieId}`} size="small" color="primary">
+                                Więcej...
+                        </Button>
+                        </CardActions>
+                    </CardContent>
+                </div>
+            </Card>
+        </Grid>
     );
 }
 

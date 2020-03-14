@@ -20,7 +20,7 @@ export default function (ComposedClass, reload) {
                     };
                 };
             });
-        });
+        }, [dispatch, props.history, user]);
 
         return (
             <ComposedClass {...props} user={user} />

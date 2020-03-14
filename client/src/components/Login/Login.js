@@ -122,7 +122,7 @@ function Login(props) {
                   onChange={handleChange}
                   autoComplete="email"
                   autoFocus
-                  InputProps={{
+                  inputprops={{
                     startAdornment: (
                       <InputAdornment position="start" className={classes.ico}>
                         <Email />
@@ -145,7 +145,7 @@ function Login(props) {
                   value={values.password}
                   onChange={handleChange}
                   autoComplete="current-password"
-                  InputProps={{
+                  inputprops={{
                     startAdornment: (
                       <InputAdornment position="start" className={classes.ico}>
                         <Lock />
@@ -164,7 +164,7 @@ function Login(props) {
                   className={classes.submit}
                   disabled={isSubmitting}
                   onSubmit={handleSubmit}
-                  htmlType="submit"
+                  htmltype="submit"
                 >
                   Zaloguj
                 </Button>

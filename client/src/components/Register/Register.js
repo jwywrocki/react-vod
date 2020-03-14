@@ -47,7 +47,7 @@ function Register(props) {
         email: '',
         name: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string()
@@ -124,10 +124,9 @@ function Register(props) {
                       placeholder="Nazwa użytkownika"
                       value={values.name}
                       onChange={handleChange}
-                      classes={errors.name && touched.name ? 'text-input error' : 'text-input'}
                       autoComplete="name"
                       autoFocus
-                      InputProps={{
+                      inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
                             <Person />
@@ -150,9 +149,8 @@ function Register(props) {
                       placeholder="E-mail"
                       value={values.email}
                       onChange={handleChange}
-                      classes={errors.email && touched.email ? 'text-input error' : 'text-input'}
                       autoComplete="email"
-                      InputProps={{
+                      inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
                             <Email />
@@ -175,9 +173,8 @@ function Register(props) {
                       placeholder="Hasło"
                       value={values.password}
                       onChange={handleChange}
-                      classes={errors.password && touched.password ? 'text-input error' : 'text-input'}
                       autoComplete="current-password"
-                      InputProps={{
+                      inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
                             <Lock />
@@ -200,9 +197,8 @@ function Register(props) {
                       placeholder="Potwierdź hasło"
                       value={values.confirmPassword}
                       onChange={handleChange}
-                      classes={errors.confirmPassword && touched.confirmPassword ? 'text-input error' : 'text-input'}
                       autoComplete="current-password"
-                      InputProps={{
+                      inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
                             <Lock />
