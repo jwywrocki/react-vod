@@ -14,13 +14,13 @@ function MovieDetails(props) {
                 console.log(response)
                 setMovie(response)
             })
-    }, [])
+    }, [props.match.params.movieId])
     return (
         <div>
             {Movie &&
                 <BackImage
                     image={`${IMAGE_URL}w1280${Movie.backdrop_path && Movie.backdrop_path}`}
-                    title={Movie.original_title}
+                    title={Movie.title}
                     text={Movie.overview} />
             }
             <div style={{ width: '85%', margin: '1rem auto' }}>
@@ -30,7 +30,7 @@ function MovieDetails(props) {
                 </div>
 
                 <Descriptions title="Informacje" bordered>
-                    <Descriptions.Item label="Tytuł">{Movie.original_title}</Descriptions.Item>
+                    <Descriptions.Item label="Tytuł">{Movie.title}</Descriptions.Item>
                     <Descriptions.Item label="Ocena">{Movie.vote_average}</Descriptions.Item>
                     <Descriptions.Item label="Głosów">{Movie.vote_count}</Descriptions.Item>
                     <Descriptions.Item label="Popularność">{Movie.popularity}</Descriptions.Item>

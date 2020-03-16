@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { registerUser } from "../../actions/user_actions";
 
 import {
   Avatar, Button, Link, Grid, Typography,
   CssBaseline, TextField, Container, InputAdornment
 } from '@material-ui/core';
-import { LockOutlined, Person, Email, Lock } from '@material-ui/icons';
+
 import { makeStyles } from '@material-ui/core/styles';
+
+import AuthIcon from '@material-ui/icons/LockOutlined';
+import PersonIcon from '@material-ui/icons/Person';
+import EmailIcon from '@material-ui/icons/Email';
+import LockIcon from '@material-ui/icons/Lock';
+
+import { registerUser } from "../../actions/user_actions";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -27,11 +33,19 @@ const useStyles = makeStyles(theme => ({
     opacity: .75
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  error: {
+    color: theme.palette.error.main,
+    textAlign: "center",
+    fontSize: '14px',
+    padding: '19px',
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: '5px',
   },
 }));
 
@@ -104,7 +118,7 @@ function Register(props) {
             <CssBaseline />
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
-                <LockOutlined />
+                <AuthIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
                 Zarejestruj się
@@ -113,7 +127,7 @@ function Register(props) {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     {formErrorMessage && (
-                      <label ><p style={{ color: '#f5222d', textAlign: "center", fontSize: '14px', padding: '20px' }}>{formErrorMessage}</p></label>
+                      <label ><p className={classes.error}>{formErrorMessage}</p></label>
                     )}
                     <TextField
                       variant="outlined"
@@ -129,7 +143,7 @@ function Register(props) {
                       inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
-                            <Person />
+                            <PersonIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -153,7 +167,7 @@ function Register(props) {
                       inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
-                            <Email />
+                            <EmailIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -177,7 +191,7 @@ function Register(props) {
                       inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
-                            <Lock />
+                            <LockIcon />
                           </InputAdornment>
                         ),
                       }}
@@ -201,7 +215,7 @@ function Register(props) {
                       inputprops={{
                         startAdornment: (
                           <InputAdornment position="start" className={classes.ico}>
-                            <Lock />
+                            <LockIcon />
                           </InputAdornment>
                         ),
                       }}

@@ -6,8 +6,8 @@ import {
     LOGOUT_USER,
 } from './types';
 
-export function registerUser(dataToSubmit) {
-    const request = axios.post('/api/users/register', dataToSubmit)
+export function registerUser(data) {
+    const request = axios.post('/api/users/register', data)
         .then(response => response.data);
 
     return {
@@ -16,8 +16,8 @@ export function registerUser(dataToSubmit) {
     };
 };
 
-export function loginUser(dataToSubmit) {
-    const request = axios.post('/api/users/login', dataToSubmit)
+export function loginUser(data) {
+    const request = axios.post('/api/users/login', data)
         .then(response => response.data);
 
     return {

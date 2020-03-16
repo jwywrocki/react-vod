@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { User } = require('../models/user');
+const { User } = require('../models/User');
 
 const { auth } = require('../middleware/auth');
 
-router.get("/auth", auth, (req, res) => {
+const expTime = { expires: new Date(Date.now() + 3600000), httpOnly: true };
+
+router.get('/auth', auth, (req, res) => {
     res.status(200).json({
-        _id: req._id,
+        _id: req.user._id,
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
@@ -18,8 +20,11 @@ router.get("/auth", auth, (req, res) => {
 router.post('/register', (req, res) => {
     const user = new User(req.body);
 
-    user.save((error, doc) => {
-        if (error) return res.json({ success: false, message: "Taki użytkownik już istnieje" });
+    user.save((err, doc) => {
+        if (err) return res.json({
+            success: false,
+            message: "Taki użytkownik już istnieje"
+        });
         return res.status(200).json({
             success: true,
         });
@@ -27,23 +32,23 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email }, (error, user) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
             return res.json({
                 loginSuccess: false,
                 message: "Nieprawidłowy adres email"
             });
-        user.comparePassword(req.body.password, (error, isMatch) => {
+        user.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
                 return res.json({
                     loginSuccess: false,
                     message: "Nieprawidłowe hasło"
                 });
-            user.generateToken((error, user) => {
-                if (error) return res.status(400).send(error);
-                res.cookie("vod_authExp", user.tokenExp);
+            user.generateToken((err, user) => {
+                if (err) return res.status(400).send(err);
+                res.cookie('vod_authExp', expTime);
                 res
-                    .cookie("vod_auth", user.token)
+                    .cookie('vod_auth', user.token, expTime)
                     .status(200)
                     .json({
                         loginSuccess: true,
@@ -54,14 +59,14 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (error, doc) => {
-        if (error) return res.json({
+router.get('/logout', auth, (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
+        if (err) return res.json({
             success: false,
-            error
+            err
         });
         return res.status(200).send({
-            success: true
+            success: true,
         });
     });
 });
