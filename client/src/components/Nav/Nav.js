@@ -2,15 +2,15 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import {
-  AppBar, Typography, Link,
-  Toolbar
+  AppBar, Link,
+  Toolbar, Box
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import InOut from './InOut'
-import Drawer from '../Home/Drawer'
-import Search from '../Search/Search'
+import InOut from './Sections/InOut'
+import Drawer from './Sections/Drawer'
+import SearchBar from './Sections/SearchBar'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -32,12 +32,17 @@ const useStyles = makeStyles(theme => ({
     height: '50px',
     justifyContent: "center",
   },
-  toolbarTitle: {
-    flexGrow: 0,
-  },
   link: {
     margin: theme.spacing(1, 1),
-  }
+  },
+  links: {
+    display: 'block',
+  },
+  [theme.breakpoints.down('sm')]: {
+    links: {
+      diplay: 'none',
+    },
+  },
 }));
 
 function Nav() {
@@ -47,18 +52,16 @@ function Nav() {
     <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <Drawer />
-        <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-          <a href="/"><img src="../pixie.png" className={classes.logo} alt=""></img></a>
-        </Typography>
-        <nav>
-          <Link variant="button" color="textPrimary" href="/" className={classes.link}>
+        <a href="/"><img src="../pixie.png" className={classes.logo} alt=""></img></a>
+        <Box variant="div" className={classes.links}>
+          <Link variant="button" color="textPrimary" href="/movies" className={classes.link}>
             Filmy
-            </Link>
-          <Link variant="button" color="textPrimary" href="/" className={classes.link}>
+          </Link>
+          <Link variant="button" color="textPrimary" href="/tv" className={classes.link}>
             Seriale
-            </Link>
-        </nav>
-        <Search />
+          </Link>
+        </Box>
+        <SearchBar />
         <InOut />
       </Toolbar>
     </AppBar>

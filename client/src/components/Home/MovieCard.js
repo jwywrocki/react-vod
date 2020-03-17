@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
     },
     details_desc: {
-        fontSize: '11px',
+        fontSize: `11px !important`,
     },
     info: {
         position: 'relative',
@@ -38,57 +38,60 @@ const useStyles = makeStyles(theme => ({
         left: '0',
         width: '265px',
         paddingTop: theme.spacing(2),
+    },
+    link_button: {
+        borderRadius: '0px',
     }
 }));
 
-function MovieList(props) {
+function MovieCard(props) {
     const classes = useStyles();
 
     return (
         <Grid item sm={12} md={6} xl={3}>
             <Card className={classes.root} raised>
-                <CardActionArea href={`/movie/${props.movieId}`}>
+                <CardActionArea href={`/${props.request}/${props.Id}`}>
                     <CardMedia
                         component='img'
                         width='200px'
                         height='301px'
                         image={props.image}
-                        title={props.movieTitle}
+                        title={props.Title}
                     />
                 </CardActionArea>
                 <div className={classes.details}>
                     <CardContent className={classes.info}>
                         <Typography gutterBottom variant="subtitle1" className={classes.title}>
-                            {props.movieTitle}
+                            {props.Title}
                         </Typography>
-                        <List dense disableGlutters>
+                        <List dense>
                             <ListItem>
                                 <ListItemIcon>
                                     <PopularityIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={`Popularność: ${props.moviePop}`} disableTypography />
+                                <ListItemText primary={`Popularność: ${props.Pop}`} disableTypography />
                             </ListItem>
                             <ListItem>
                                 <ListItemIcon>
                                     <VotesIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={`Głosów: ${props.movieVotes}`} disableTypography />
+                                <ListItemText primary={`Głosów: ${props.Votes}`} disableTypography />
                             </ListItem>
                             <ListItem>
                                 <ListItemIcon>
                                     <GradeIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={`Ocena: ${props.movieRate}`} disableTypography />
+                                <ListItemText primary={`Ocena: ${props.Rate}`} disableTypography />
                             </ListItem>
                             <ListItem>
                                 <ListItemIcon>
                                     <ScheduleIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={`Publikacja: ${props.movieDate}`} disableTypography />
+                                <ListItemText primary={`Publikacja: ${props.ReDate}`} disableTypography />
                             </ListItem>
                         </List>
                         <Box className={classes.linkDetails}>
-                            <Button href={`/movie/${props.movieId}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
+                            <Button className={classes.link_button} href={`/${props.request}/${props.Id}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
                                 Więcej informacji
                         </Button>
                         </Box>
@@ -99,4 +102,4 @@ function MovieList(props) {
     );
 }
 
-export default MovieList;
+export default MovieCard;

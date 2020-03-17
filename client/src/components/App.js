@@ -13,7 +13,9 @@ import Register from "./Register/Register";
 import Nav from "./Nav/Nav";
 import Footer from "./Footer/Footer";
 import MovieDetails from "./Details/MovieDetails";
-
+import TvDetails from "./Details/TvDetails";
+import Movies from "./Movies/Movies";
+import TvShows from "./TvShows/TvShows";
 
 function App() {
   let theme = createMuiTheme({
@@ -33,7 +35,10 @@ function App() {
             <Route exact path="/" component={Auth(Home, null)} />
             <Route exact path="/login" component={Auth(Login, false)} />
             <Route exact path="/register" component={Auth(Register, false)} />
+            <Route exact path="/movies" component={Auth(Movies, null)} />
+            <Route exact path="/tv" component={Auth(TvShows, null)} />
             <Route exact path="/movie/:movieId" component={Auth(MovieDetails, null)} />
+            <Route exact path="/tv/:tvId" component={Auth(TvDetails, null)} />
             {/* <Route exact path="/search/:query" component={Auth(Search), null} /> */}
           </Switch>
         </div>

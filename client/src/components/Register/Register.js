@@ -79,13 +79,13 @@ function Register(props) {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
 
-          let dataToSubmit = {
+          let data = {
             email: values.email,
             password: values.password,
             name: values.name
           };
 
-          dispatch(registerUser(dataToSubmit)).then(response => {
+          dispatch(registerUser(data)).then(response => {
             if (response.payload.success) {
               props.history.push("/login");
             } else {

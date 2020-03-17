@@ -73,12 +73,12 @@ function Login(props) {
       }
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          let dataToSubmit = {
+          let data = {
             email: values.email,
             password: values.password
           };
 
-          dispatch(loginUser(dataToSubmit))
+          dispatch(loginUser(data))
             .then(response => {
               if (response.payload.loginSuccess) {
                 window.localStorage.setItem('userId', response.payload.userId);

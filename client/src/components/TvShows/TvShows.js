@@ -3,7 +3,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
 import ScrollTop from '../Nav/Sections/ScrollTop';
-import TabPane from './Sections/TabPane';
+import TabPane from '../Home/Sections/TabPane';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Home(props) {
+function Movies(props) {
     const classes = useStyles();
 
     return (
@@ -27,4 +27,4 @@ function Home(props) {
     )
 }
 
-export default Home
+export default Movies

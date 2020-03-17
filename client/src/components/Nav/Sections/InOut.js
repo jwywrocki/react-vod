@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-
 import {
     Button
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
+
+import { logoutUser } from "../../../actions/user_actions";
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -20,16 +20,17 @@ const useStyles = makeStyles(theme => ({
 
 function InOut(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const user = useSelector(state => state.user);
 
     const logoutHandler = () => {
-        axios.get(`api/users/logout`).then(response => {
-            if (response.status === 200) {
-                props.history.push('/login');
+        dispatch(logoutUser()).then(response => {
+            if (response.payload.success) {
+                props.history.push("/login");
             } else {
                 alert('Wylogowanie nie powiodło się');
-            };
-        });
+            }
+        })
     };
 
     const auth = (user.userData && !user.userData.isAuth);
