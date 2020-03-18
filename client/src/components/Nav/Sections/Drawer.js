@@ -42,7 +42,7 @@ function Drawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                <ListItem button>
+                <ListItem button href="/filmy">
                     <ListItemIcon>
                         <TheatersIcon />
                     </ListItemIcon>

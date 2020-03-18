@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { API_KEY, API_URL, IMAGE_URL } from '../Config';
+
+import { CssBaseline, makeStyles } from '@material-ui/core';
+
 import BackImage from '../Details/BackImage';
-import { Descriptions } from 'antd';
+import { API_KEY, API_URL, IMAGE_URL } from '../Config';
+
+const useStyles = makeStyles(theme => ({
+
+}));
 
 function TvDetails(props) {
+    const classes = useStyles();
     const [Tv, setTv] = useState([])
     useEffect(() => {
         const tvId = props.match.params.tvId
@@ -17,29 +24,19 @@ function TvDetails(props) {
     }, [props.match.params.tvId])
     return (
         <div>
+            <CssBaseline />
             {Tv &&
                 <BackImage
+                    vid_id={`${Tv.id}`}
                     image={`${IMAGE_URL}w1280${Tv.backdrop_path && Tv.backdrop_path}`}
+                    poster={`${IMAGE_URL}w500${Tv.poster_path && Tv.poster_path}`}
                     title={Tv.name}
-                    text={Tv.overview} />
+                    originalTitle={Tv.original_name}
+                    text={Tv.overview}
+                    grade={Tv.vote_average}
+                    type_vid={`tv`}
+                />
             }
-            <div style={{ width: '85%', margin: '1rem auto' }}>
-
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <button>Dodaj do ulubionych</button>
-                </div>
-
-                <Descriptions title="Informacje" bordered>
-                    <Descriptions.Item label="Tytuł">{Tv.title}</Descriptions.Item>
-                    <Descriptions.Item label="Ocena">{Tv.vote_average}</Descriptions.Item>
-                    <Descriptions.Item label="Głosów">{Tv.vote_count}</Descriptions.Item>
-                    <Descriptions.Item label="Popularność">{Tv.popularity}</Descriptions.Item>
-                    <Descriptions.Item label="Data wydania">{Tv.release_date}</Descriptions.Item>
-                    <Descriptions.Item label="Czas trwania">{Tv.runtime}</Descriptions.Item>
-                    <Descriptions.Item label="Dochód">{Tv.revenue}</Descriptions.Item>
-                    <Descriptions.Item label="Stan">{Tv.status}</Descriptions.Item>
-                </Descriptions>
-            </div>
         </div>
     );
 }

@@ -69,19 +69,15 @@ function TabPane(props) {
                 <CardList type={"top_rated"} request={`${props.request}`} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {`${props.request}` === 'movie' &&
-                    <CardList type={"upcoming"} request={`${props.request}`} />
-                }
-                {`${props.request}` === 'tv' &&
-                    <CardList type={"airing_today"} request={`${props.request}`} />
+                {`${props.request}` === 'movie'
+                    ? <CardList type={"upcoming"} request={`${props.request}`} />
+                    : <CardList type={"airing_today"} request={`${props.request}`} />
                 }
             </TabPanel>
             <TabPanel value={value} index={3}>
-                {`${props.request}` === 'movie' &&
-                    <CardList type={"now_playing"} request={`${props.request}`} />
-                }
-                {`${props.request}` === 'tv' &&
-                    <CardList type={"on_the_air"} request={`${props.request}`} />
+                {`${props.request}` === 'movie'
+                    ? <CardList type={"now_playing"} request={`${props.request}`} />
+                    : <CardList type={"on_the_air"} request={`${props.request}`} />
                 }
             </TabPanel>
         </div>
