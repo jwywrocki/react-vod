@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,27 +24,26 @@ function App() {
     },
   });
   return (
-    <Suspense>
 
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Nav />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        <div style={{ minHeight: 'calc(100vh)' }}>
-          <Switch>
-            <Route exact path="/" component={Auth(Home, null)} />
-            <Route exact path="/login" component={Auth(Login, false)} />
-            <Route exact path="/register" component={Auth(Register, false)} />
-            <Route exact path="/movies" component={Auth(Movies, null)} />
-            <Route exact path="/tv" component={Auth(TvShows, null)} />
-            <Route exact path="/movie/:movieId" component={Auth(MovieDetails, null)} />
-            <Route exact path="/tv/:tvId" component={Auth(TvDetails, null)} />
-            {/* <Route exact path="/search/:query" component={Auth(Search), null} /> */}
-          </Switch>
-        </div>
-        <Footer />
-      </ThemeProvider>
-    </Suspense>
+      <Nav />
+
+      <Switch>
+        <Route exact path="/" component={Auth(Home, null)} />
+        <Route exact path="/login" component={Auth(Login, false)} />
+        <Route exact path="/register" component={Auth(Register, false)} />
+        <Route exact path="/movies" component={Auth(Movies, null)} />
+        <Route exact path="/tv" component={Auth(TvShows, null)} />
+        <Route exact path="/movie/:movieId" component={Auth(MovieDetails, null)} />
+        <Route exact path="/tv/:tvId" component={Auth(TvDetails, null)} />
+        {/* <Route exact path="/search/:query" component={Auth(Search), null} /> */}
+      </Switch>
+
+      <Footer />
+
+    </ThemeProvider>
   );
 };
 

@@ -82,7 +82,7 @@ function BackImage(props) {
                                 <IconButton>
                                     <BookmarkIcon className={classes.controls} />
                                 </IconButton>
-                                <IconButton href='/'>
+                                <IconButton href={`http://www.youtube.com/embed/${props.video}`}>
                                     <PlayCircleIcon className={classes.controls} />
                                 </IconButton>
 

@@ -44,13 +44,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function MovieCard(props) {
+function TvCard(props) {
     const classes = useStyles();
 
     return (
         <Grid item sm={12} md={6} xl={3}>
             <Card className={classes.root} raised>
-                <CardActionArea href={`/${props.request}/${props.Id}`}>
+                <CardActionArea href={`/tv/${props.Id}`}>
                     <CardMedia
                         component='img'
                         width='200px'
@@ -91,7 +91,7 @@ function MovieCard(props) {
                             </ListItem>
                         </List>
                         <Box className={classes.linkDetails}>
-                            <Button className={classes.link_button} href={`/${props.request}/${props.Id}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
+                            <Button className={classes.link_button} href={`/tv/${props.Id}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
                                 Więcej informacji
                         </Button>
                         </Box>
@@ -102,4 +102,4 @@ function MovieCard(props) {
     );
 }
 
-export default MovieCard;
+export default TvCard;

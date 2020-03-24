@@ -3,7 +3,6 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
 import ScrollTop from '../Nav/Sections/ScrollTop';
-import TabPane from './Sections/TabPane';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,7 +20,7 @@ function Home(props) {
 
     return (
         <div className={classes.root}>
-            <TabPane tab1={'seriale'} tab4={'TV'} request={'tv'} />
+            Hello
             <ScrollTop {...props} />
         </div>
     )

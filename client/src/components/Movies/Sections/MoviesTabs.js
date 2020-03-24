@@ -10,8 +10,7 @@ import GradeIcon from '@material-ui/icons/Grade';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import TheatersIcon from '@material-ui/icons/Theaters';
 
-import CardList from '../CardList';
-
+import MovieList from './MovieList';
 
 const useStyles = makeStyles(theme => ({
     tab_panel: {
@@ -42,7 +41,7 @@ function tabProps(index) {
     };
 }
 
-function TabPane(props) {
+function MovieTabs(props) {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -57,31 +56,25 @@ function TabPane(props) {
                 centered
                 id="back-to-top-anchor"
             >
-                <Tab icon={<PopularityIcon />} label={`Popularne ${props.tab1}`} {...tabProps(0)} />
+                <Tab icon={<PopularityIcon />} label="Popularne filmy" {...tabProps(0)} />
                 <Tab icon={<GradeIcon />} label="Najwyżej oceniane" {...tabProps(1)} />
                 <Tab icon={<ScheduleIcon />} label="Nadchodzące" {...tabProps(2)} />
-                <Tab icon={<TheatersIcon />} label={`Obecnie w ${props.tab4}`} {...tabProps(3)} />
+                <Tab icon={<TheatersIcon />} label="Obecnie w kinach" {...tabProps(3)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <CardList type={"popular"} request={`${props.request}`} />
+                <MovieList type={"popular"} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CardList type={"top_rated"} request={`${props.request}`} />
+                <MovieList type={"top_rated"} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {`${props.request}` === 'movie'
-                    ? <CardList type={"upcoming"} request={`${props.request}`} />
-                    : <CardList type={"airing_today"} request={`${props.request}`} />
-                }
+                <MovieList type={"upcoming"} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                {`${props.request}` === 'movie'
-                    ? <CardList type={"now_playing"} request={`${props.request}`} />
-                    : <CardList type={"on_the_air"} request={`${props.request}`} />
-                }
+                <MovieList type={"now_playing"} />
             </TabPanel>
         </div>
     );
 }
 
-export default TabPane;
+export default MovieTabs;
