@@ -27,7 +27,6 @@ function App() {
 
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       <Nav />
 
       <Switch>
@@ -42,7 +41,6 @@ function App() {
       </Switch>
 
       <Footer />
-
     </ThemeProvider>
   );
 };

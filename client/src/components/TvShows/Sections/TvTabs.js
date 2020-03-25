@@ -7,14 +7,17 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import PopularityIcon from '@material-ui/icons/TrendingUp';
 import GradeIcon from '@material-ui/icons/Grade';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import TheatersIcon from '@material-ui/icons/Theaters';
+import TodayIcon from '@material-ui/icons/Today';
+import TvIcon from '@material-ui/icons/Tv';
 
 import TvList from './TvList';
 
 const useStyles = makeStyles(theme => ({
     tab_panel: {
-        padding: theme.spacing(2),
+        margin: theme.spacing(1),
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: theme.spacing(0),
+        },
     },
 }));
 
@@ -56,10 +59,10 @@ function TvTabs(props) {
                 centered
                 id="back-to-top-anchor"
             >
-                <Tab icon={<PopularityIcon />} label="Popularne w TV" {...tabProps(0)} />
+                <Tab icon={<PopularityIcon />} label="Popularne seriale" {...tabProps(0)} />
                 <Tab icon={<GradeIcon />} label="Najwyżej oceniane" {...tabProps(1)} />
-                <Tab icon={<ScheduleIcon />} label="Dzisiaj w TV" {...tabProps(2)} />
-                <Tab icon={<TheatersIcon />} label="W TV" {...tabProps(3)} />
+                <Tab icon={<TodayIcon />} label="Dzisiaj w TV" {...tabProps(2)} />
+                <Tab icon={<TvIcon />} label="W TV" {...tabProps(3)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <TvList type={"popular"} />

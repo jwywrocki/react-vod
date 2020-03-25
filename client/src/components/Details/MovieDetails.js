@@ -22,12 +22,29 @@ function MovieDetails(props) {
     useEffect(() => {
         const movieId = props.match.params.movieId
 
-        fetch(`${API_URL}movie/${movieId}?api_key=${API_KEY}&language=pl&append_to_response=videos,images&include_image_language=en,null`)
+        fetch(`${API_URL}movie/${movieId}?api_key=${API_KEY}&language=pl&append_to_response=images&include_image_language=en,null`)
             .then(response => response.json())
             .then(response => {
                 console.log(response)
                 setMovie(response)
-                setVid(response.videos.results)
+
+                let endpointForVids = `${API_URL}movie/${movieId}/videos?api_key=${API_KEY}&language=pl`;
+                fetch(endpointForVids)
+                    .then(response => response.json())
+                    .then(response => {
+                        console.log(response)
+                        if (response.results.length === 0) {
+                            let endpointForVidsEn = `${API_URL}movie/${movieId}/videos?api_key=${API_KEY}`;
+                            fetch(endpointForVidsEn)
+                                .then(response => response.json())
+                                .then(response => {
+                                    console.log(response)
+                                    setVid(response.results[0])
+                                })
+                        } else {
+                            setVid(response.results[0])
+                        }
+                    })
             })
     }, [props.match.params.movieId])
     return (

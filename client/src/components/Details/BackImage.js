@@ -1,22 +1,52 @@
 import React from 'react';
 
-import { Typography, CssBaseline, Grid, makeStyles, Divider, IconButton } from '@material-ui/core';
+import {
+    Typography, CssBaseline, Grid, makeStyles, Modal,
+    Divider, IconButton, Avatar, CircularProgress, Card
+} from '@material-ui/core';
 
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
 import StarIcon from '@material-ui/icons/StarBorder';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
 import PlayCircleIcon from '@material-ui/icons/PlayCircleOutline';
 
+import { fade } from '@material-ui/core/styles/colorManipulator';
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
 const useStyles = makeStyles(theme => ({
+    avatar: {
+        width: '60px',
+        height: '60px',
+        backgroundColor: theme.palette.text.primary,
+    },
+    value: {
+        fontWeight: 'bold',
+        fontSize: '21px',
+    },
     movieInfo: {
         padding: '25px',
         [theme.breakpoints.up('md')]: {
             padding: '40px',
         },
         minHeight: 'calc(100vh - 65px)',
-        background: `linear-gradient(to bottom, rgba(0,0,0,.65) 33%,
-        rgba(0,0,0,.8) 66%,
-        rgba(0,0,0,.9) 100%)`,
+        background: `linear-gradient(to bottom, ${fade(theme.palette.background.default, 0)} 25%,
+        ${fade(theme.palette.background.default, 0.05)} 50%,
+        ${fade(theme.palette.background.default, 0.1)} 75%,
+        ${fade(theme.palette.background.default, 0.15)} 100%)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
         backgroundAttachment: 'fixed',
@@ -29,23 +59,52 @@ const useStyles = makeStyles(theme => ({
             maxHeight: '400px',
         },
     },
+    card: {
+        padding: '25px',
+        background: fade(theme.palette.background.default, 0.85),
+    },
     col: {
         maxWidth: '500px',
     },
     divider: {
         margin: '15px 0',
     },
-    controls: {
+    control_buttons: {
+        margin: '0 5px',
+    },
+    control_icons: {
         fontSize: '40px',
-        margin: '0',
     },
     description: {
         fontSize: '16px',
     },
+    modal: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '75vw',
+        height: '75vh',
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
 }))
+
 
 function BackImage(props) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [modalStyle] = React.useState(getModalStyle);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div>
@@ -66,41 +125,82 @@ function BackImage(props) {
                                 <img src={props.poster} className={classes.poster} alt=""></img>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12} md={6} className={classes.col}>
-                            <Grid item xs={12} md={12}>
-                                <Typography variant="h4"> {props.title} </Typography>
-                                <Typography color="textSecondary" variant="h5"> {props.originalTitle} </Typography>
+                        <Card className={classes.card} raised>
+                            <Grid container className={classes.col}>
+                                <Grid item xs={3} sm={2} md={2}>
+                                    <Avatar className={classes.avatar}>
+                                        <CircularProgress
+                                            style={{ position: "absolute" }}
+                                            variant="static"
+                                            value={props.grade * 10}
+                                            color="primary"
+                                            size={54}
+                                            thickness={6}
+                                        />
+                                        <span className={classes.value}>
+                                            {props.grade}
+                                        </span>
+                                    </Avatar>
+                                </Grid>
+                                <Grid item xs={9} sm={10} md={10}>
+                                    <Typography variant="h4"> {props.title} </Typography>
+                                    <Typography color="textSecondary" variant="h5"> {props.originalTitle} </Typography>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <Divider className={classes.divider} />
+                                    <Grid item xs={12} md={12} align="center">
+                                        <IconButton className={classes.control_buttons}>
+                                            <FavoriteIcon className={classes.control_icons} />
+                                        </IconButton>
+                                        <IconButton className={classes.control_buttons}>
+                                            <StarIcon className={classes.control_icons} />
+                                        </IconButton>
+                                        <IconButton className={classes.control_buttons}>
+                                            <BookmarkIcon className={classes.control_icons} />
+                                        </IconButton>
+                                        <IconButton className={classes.control_buttons} onClick={handleOpen} >
+                                            <PlayCircleIcon className={classes.control_icons} />
+                                        </IconButton>
+                                        <Modal
+                                            aria-labelledby="simple-modal-title"
+                                            aria-describedby="simple-modal-description"
+                                            open={open}
+                                            onClose={handleClose}
+                                        >
+                                            <div className={classes.modal}>
+                                                <iframe
+                                                    style={{
+                                                        position: `absolute`,
+                                                        top: 0,
+                                                        left: 0,
+                                                        width: `100%`,
+                                                        height: `100%`,
+                                                    }}
+                                                    src={`http://www.youtube.com/embed/${props.video}`}
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen>
+                                                </iframe>
+                                            </div>
+                                        </Modal>
+                                    </Grid>
+                                    <Divider className={classes.divider} />
+                                    <Grid item xs={12} md={12}>
+                                        <Typography variant="h6"> Opis </Typography>
+                                        <Typography className={classes.description}>{props.text}</Typography>
+                                    </Grid>
+                                    <Divider className={classes.divider} />
+                                    <Grid item xs={12} md={12}>
+                                        Gatunki
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                            <Divider className={classes.divider} />
-                            <Grid item xs={12} md={12} align="center">
-                                <IconButton>
-                                    <FavoriteIcon className={classes.controls} />
-                                </IconButton>
-                                <IconButton>
-                                    <StarIcon className={classes.controls} />
-                                </IconButton>
-                                <IconButton>
-                                    <BookmarkIcon className={classes.controls} />
-                                </IconButton>
-                                <IconButton href={`http://www.youtube.com/embed/${props.video}`}>
-                                    <PlayCircleIcon className={classes.controls} />
-                                </IconButton>
-
-                            </Grid>
-                            <Divider className={classes.divider} />
-                            <Grid item xs={12} md={12}>
-                                <Typography className={classes.description}>{props.text}</Typography>
-                            </Grid>
-                            <Divider className={classes.divider} />
-                            <Grid item xs={12} md={12}>
-                                Gatunki
-                            </Grid>
-                        </Grid>
+                        </Card>
                     </Grid>
 
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

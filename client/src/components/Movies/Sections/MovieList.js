@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { Grid, Button, makeStyles } from '@material-ui/core';
+import { Grid, Button, Box } from '@material-ui/core';
 
 import { API_KEY, API_URL, IMAGE_URL } from '../../Config'
 import MovieCard from './MovieCard';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = makeStyles(theme => ({
-    loading: {
-        margin: '0 auto',
-        fontSize: '40px'
-    },
-}))
-
 function MovieList(props) {
-    const classes = useStyles();
-
     const [Data, setData] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [CurrentPage, setCurrentPage] = useState(0);
@@ -25,10 +16,10 @@ function MovieList(props) {
         await fetch(endpoint)
             .then(result => result.json())
             .then(result => {
-                console.log(result);
-                setData([...Data, ...result.results])
-                setCurrentPage(result.page)
-            }, setLoading(false))
+                setData([...Data, ...result.results]);
+                setCurrentPage(result.page);
+                setLoading(false);
+            })
             .catch(error => console.error('Error:', error));
     };
 
@@ -44,7 +35,11 @@ function MovieList(props) {
     return (
         <div>
             <Grid container spacing={3}>
-                {Loading === true ? <div className={classes.loading}>TEST<CircularProgress /></div> : null}
+                {Loading &&
+                    <Box display="flex" justifyContent="center" my={3} flexGrow={1}>
+                        <CircularProgress size={50} disableShrink />
+                    </Box>
+                }
                 {Data && Data.map((data, index) => (
                     <React.Fragment key={index}>
                         <MovieCard
@@ -60,9 +55,9 @@ function MovieList(props) {
                 ))}
             </Grid>
             <br />
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Box display="flex" justifyContent="center" my={3} flexGrow={1}>
                 <Button onClick={handleLoadMore} variant="contained" color="primary">Załaduj więcej</Button>
-            </div>
+            </Box>
         </div>
     );
 }

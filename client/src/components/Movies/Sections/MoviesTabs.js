@@ -14,7 +14,10 @@ import MovieList from './MovieList';
 
 const useStyles = makeStyles(theme => ({
     tab_panel: {
-        padding: theme.spacing(2),
+        margin: theme.spacing(1),
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: theme.spacing(0),
+        },
     },
 }));
 
