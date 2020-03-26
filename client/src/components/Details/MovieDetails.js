@@ -19,26 +19,32 @@ function MovieDetails(props) {
     const classes = useStyles();
     const [Movie, setMovie] = useState([]);
     const [Vid, setVid] = useState([]);
+    const [Genres, setGenres] = useState([]);
+    const [Images, setImages] = useState([]);
     useEffect(() => {
         const movieId = props.match.params.movieId
 
         fetch(`${API_URL}movie/${movieId}?api_key=${API_KEY}&language=pl&append_to_response=images&include_image_language=en,null`)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
-                setMovie(response)
+                console.log('Movie info:', response);
+                setMovie(response);
+                console.log('Genres:', response.genres);
+                setGenres(response.genres);
+                console.log('Images:', response.images.backdrops);
+                setImages(response.images.backdrops);
 
                 let endpointForVids = `${API_URL}movie/${movieId}/videos?api_key=${API_KEY}&language=pl`;
                 fetch(endpointForVids)
                     .then(response => response.json())
                     .then(response => {
-                        console.log(response)
+                        console.log('Vid in pl:', response)
                         if (response.results.length === 0) {
                             let endpointForVidsEn = `${API_URL}movie/${movieId}/videos?api_key=${API_KEY}`;
                             fetch(endpointForVidsEn)
                                 .then(response => response.json())
                                 .then(response => {
-                                    console.log(response)
+                                    console.log('Vid in en:', response)
                                     setVid(response.results[0])
                                 })
                         } else {
@@ -59,15 +65,16 @@ function MovieDetails(props) {
                         poster={`${IMAGE_URL}w342${Movie.poster_path && Movie.poster_path}`}
                         title={Movie.title}
                         originalTitle={Movie.original_title}
-                        text={Movie.overview}
+                        text={Movie.overview ? Movie.overview : `Przepraszamy nie posiadamy opisu do filmu: "${Movie.title}" w języku polskim.`}
                         grade={Movie.vote_average}
                         type_vid={`movie`}
-                        video={Vid.key}
+                        video={Vid ? Vid.key : null}
+                        genres={Genres}
                     />
                 }
             </div>
             <div className={classes.hello}>
-                Informacje o filmie "{Movie.title}"
+                Obsada
             </div>
             <div className={classes.hello}>
                 Galeria

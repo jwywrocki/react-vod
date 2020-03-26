@@ -17,14 +17,13 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: fade(theme.palette.text.disabled, .07),
         },
         margin: theme.spacing(0, 2, 0, 2),
-        width: '100%',
         flexGrow: 1,
         [theme.breakpoints.up('sm')]: {
             width: 'auto',
         },
     },
     searchIconIcon: {
-        width: theme.spacing(7),
+        padding: theme.spacing(0, 2),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -36,7 +35,10 @@ const useStyles = makeStyles(theme => ({
         color: 'inherit',
     },
     inputInput: {
-        padding: theme.spacing(1, 2, 1, 7),
+        [theme.breakpoints.down('sm')]: {
+            width: '150px',
+        },
+        padding: theme.spacing(1, 1, 1, 7),
     },
 }));
 

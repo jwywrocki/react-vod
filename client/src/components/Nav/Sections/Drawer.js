@@ -1,8 +1,6 @@
 import React from 'react';
-
 import {
-    IconButton, List, ListItem,
-    ListItemIcon, ListItemText, SwipeableDrawer
+    IconButton, List, Divider, Box, SwipeableDrawer
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,11 +10,21 @@ import TvIcon from '@material-ui/icons/Tv';
 import MenuIcon from '@material-ui/icons/Menu';
 import PeopleIcon from '@material-ui/icons/People';
 
-const useStyles = makeStyles({
+import InOut from './InOut';
+
+import ListItemLink from './ListItemLink';
+
+const useStyles = makeStyles(theme => ({
     list: {
+        height: '100vh',
         width: '250px',
     },
-});
+    inout: {
+        marginTop: 'calc(100vh - 209px)',
+        backgroundColor: theme.palette.primary.main,
+        color: '#ffffff',
+    },
+}));
 
 function Drawer() {
     const classes = useStyles();
@@ -42,24 +50,13 @@ function Drawer() {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                <ListItem button href="/filmy">
-                    <ListItemIcon>
-                        <TheatersIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Filmy" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <TvIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Seriale" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Osoby" />
-                </ListItem>
+                <ListItemLink link="/movies" primary="Filmy" icon={<TheatersIcon />} />
+                <ListItemLink link="/tv" primary="Seriale" icon={<TvIcon />} />
+                <ListItemLink link="/" primary="Osoby" icon={<PeopleIcon />} />
+                <Divider />
+                <Box className={classes.inout}>
+                    <InOut />
+                </Box>
             </List>
         </div>
     );

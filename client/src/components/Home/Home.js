@@ -20,7 +20,6 @@ function Home(props) {
 
     return (
         <div className={classes.root}>
-            Hello
             <ScrollTop {...props} />
         </div>
     )

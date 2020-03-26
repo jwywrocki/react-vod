@@ -1,9 +1,9 @@
 const { User } = require('../models/User');
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     let token = req.cookies.vod_auth;
 
-    User.findByToken(token, (err, user) => {
+    await User.findByToken(token, (err, user) => {
         if (err) throw err;
         if (!user)
             return res.json({

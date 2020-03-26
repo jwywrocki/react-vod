@@ -2,15 +2,19 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import {
-  AppBar, Link,
+  AppBar, IconButton,
   Toolbar, Box
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+
 import InOut from './Sections/InOut'
 import Drawer from './Sections/Drawer'
 import SearchBar from './Sections/SearchBar'
+import ListItemLink from './Sections/ListItemLink';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -36,33 +40,51 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1, 1),
   },
   links: {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'row',
   },
   [theme.breakpoints.down('sm')]: {
     links: {
-      diplay: 'none',
+      display: 'none',
     },
+    inOut: {
+      display: 'none',
+    },
+  },
+  [theme.breakpoints.up('md')]: {
+    drawer: {
+      display: 'none',
+    },
+  },
+  darkLight: {
   },
 }));
 
-function Nav() {
+function Nav(props) {
   const classes = useStyles();
 
   return (
-    <AppBar position="sticky" color="default" elevation={0} className={classes.appBar}>
+    <AppBar position="sticky" color="default" elevation={1} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        <Drawer />
+        <Box className={classes.drawer}>
+          <Drawer />
+        </Box>
         <a href="/"><img src="../pixie.png" className={classes.logo} alt=""></img></a>
-        <Box variant="div" className={classes.links}>
-          <Link variant="button" color="textPrimary" href="/movies" className={classes.link}>
-            Filmy
-          </Link>
-          <Link variant="button" color="textPrimary" href="/tv" className={classes.link}>
-            Seriale
-          </Link>
+        <Box className={classes.links}>
+          <ListItemLink link="/movies" primary="Filmy" />
+          <ListItemLink link="/tv" primary="Seriale" />
+          <ListItemLink link="/" primary="Osoby" />
         </Box>
         <SearchBar />
-        <InOut />
+        <Box className={classes.inOut}>
+          <InOut from="Nav" />
+        </Box>
+        <IconButton className={classes.darkLight} onClick={props.themeToggle}>
+          {props.themeType === "light"
+            ? <Brightness4Icon size="medium" />
+            : <Brightness7Icon size="medium" />
+          }
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

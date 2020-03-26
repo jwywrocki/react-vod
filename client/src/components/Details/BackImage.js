@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     Typography, CssBaseline, Grid, makeStyles, Modal,
-    Divider, IconButton, Avatar, CircularProgress, Card
+    Divider, IconButton, Avatar, CircularProgress, Card, Button
 } from '@material-ui/core';
 
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
@@ -11,21 +11,6 @@ import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
 import PlayCircleIcon from '@material-ui/icons/PlayCircleOutline';
 
 import { fade } from '@material-ui/core/styles/colorManipulator';
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -90,13 +75,15 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    genres: {
+        margin: '0px 10px 5px 0px',
+    },
 }))
 
 
 function BackImage(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [modalStyle] = React.useState(getModalStyle);
 
     const handleOpen = () => {
         setOpen(true);
@@ -168,19 +155,24 @@ function BackImage(props) {
                                             onClose={handleClose}
                                         >
                                             <div className={classes.modal}>
-                                                <iframe
-                                                    style={{
-                                                        position: `absolute`,
-                                                        top: 0,
-                                                        left: 0,
-                                                        width: `100%`,
-                                                        height: `100%`,
-                                                    }}
-                                                    src={`http://www.youtube.com/embed/${props.video}`}
-                                                    frameborder="0"
-                                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowfullscreen>
-                                                </iframe>
+                                                {props.video === null
+                                                    ? <div>Przepraszamy, nie znaleźliśmy video dla {props.title} w dostępnej bazie.</div>
+                                                    :
+                                                    <iframe
+                                                        src={`http://www.youtube.com/embed/${props.video}`}
+                                                        title={`${props.title} Trailer`}
+                                                        frameBorder="0"
+                                                        allowFullScreen
+                                                        style={{
+                                                            position: `absolute`,
+                                                            top: 0,
+                                                            left: 0,
+                                                            width: `100%`,
+                                                            height: `100%`,
+                                                        }}
+                                                    >
+                                                    </iframe>
+                                                }
                                             </div>
                                         </Modal>
                                     </Grid>
@@ -191,16 +183,24 @@ function BackImage(props) {
                                     </Grid>
                                     <Divider className={classes.divider} />
                                     <Grid item xs={12} md={12}>
-                                        Gatunki
+                                        {props.genres.map((genres, index) => (
+                                            <Button
+                                                className={classes.genres}
+                                                variant="contained"
+                                                color="primary"
+                                                size="small"
+                                                key={index}
+                                            >{genres.name}
+                                            </Button>
+                                        ))}
                                     </Grid>
                                 </Grid>
                             </Grid>
                         </Card>
                     </Grid>
-
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

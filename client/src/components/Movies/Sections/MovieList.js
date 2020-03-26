@@ -19,6 +19,7 @@ function MovieList(props) {
                 setData([...Data, ...result.results]);
                 setCurrentPage(result.page);
                 setLoading(false);
+                console.log(result);
             })
             .catch(error => console.error('Error:', error));
     };
