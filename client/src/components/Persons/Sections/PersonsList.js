@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { Grid, Button, Box } from '@material-ui/core';
 
 import { API_KEY, API_URL, IMAGE_URL } from '../../Config'
-import MovieCard from './MovieCard';
+import PersonCard from './PersonCard';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-function MovieList(props) {
+function PersonsList() {
     const [Data, setData] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [CurrentPage, setCurrentPage] = useState(0);
@@ -26,16 +26,17 @@ function MovieList(props) {
     };
 
     useEffect(() => {
-        const endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl${props.region}&page=1`;
+        const endpoint = `${API_URL}person/popular?api_key=${API_KEY}&language=pl&page=1`;
         fetchData(endpoint);
     }, []);
 
     const handleLoadMore = () => {
-        let endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl${props.region}&page=${CurrentPage + 1}`;
+        let endpoint = `${API_URL}person/popular?api_key=${API_KEY}&language=pl&page=${CurrentPage + 1}`;
         fetchData(endpoint);
     }
     return (
         <div>
+            <div id="back-to-top-anchor"></div>
             <Grid container spacing={3}>
                 {Loading &&
                     <Box display="flex" justifyContent="center" my={3} flexGrow={1}>
@@ -44,13 +45,11 @@ function MovieList(props) {
                 }
                 {Data && Data.map((data, index) => (
                     <React.Fragment key={index}>
-                        <MovieCard
-                            image={data.poster_path && `${IMAGE_URL}w500${data.poster_path}`}
+                        <PersonCard
+                            image={data.profile_path && `${IMAGE_URL}w500${data.profile_path}`}
                             id={data.id}
-                            title={data.title}
-                            rate={data.vote_average}
-                            overview={data.overview}
-                            premiere={data.release_date}
+                            name={data.name}
+                            knownFor={data.known_for}
                         />
                     </React.Fragment>
                 ))}
@@ -66,4 +65,4 @@ function MovieList(props) {
     );
 }
 
-export default MovieList;
+export default PersonsList;

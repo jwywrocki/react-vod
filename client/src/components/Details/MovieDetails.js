@@ -55,24 +55,23 @@ function MovieDetails(props) {
     }, [props.match.params.movieId])
     return (
         <div>
-            <div id='back-to-top-anchor'>
-                <ScrollTop />
-                <CssBaseline />
-                {Movie &&
-                    <BackImage
-                        vid_id={`${Movie.id}`}
-                        image={`${IMAGE_URL}w1280${Movie.backdrop_path && Movie.backdrop_path}`}
-                        poster={`${IMAGE_URL}w342${Movie.poster_path && Movie.poster_path}`}
-                        title={Movie.title}
-                        originalTitle={Movie.original_title}
-                        text={Movie.overview ? Movie.overview : `Przepraszamy nie posiadamy opisu do filmu: "${Movie.title}" w języku polskim.`}
-                        grade={Movie.vote_average}
-                        type_vid={`movie`}
-                        video={Vid ? Vid.key : null}
-                        genres={Genres}
-                    />
-                }
-            </div>
+            <div id='back-to-top-anchor'></div>
+            <ScrollTop />
+            <CssBaseline />
+            {Movie &&
+                <BackImage
+                    vid_id={`${Movie.id}`}
+                    image={`${IMAGE_URL}w1280${Movie.backdrop_path && Movie.backdrop_path}`}
+                    poster={`${IMAGE_URL}w342${Movie.poster_path && Movie.poster_path}`}
+                    title={Movie.title}
+                    originalTitle={Movie.original_title}
+                    text={Movie.overview ? Movie.overview : `Przepraszamy nie posiadamy opisu do filmu: "${Movie.title}" w języku polskim.`}
+                    grade={Movie.vote_average}
+                    type_vid={`movie`}
+                    video={Vid ? Vid.key : null}
+                    genres={Genres}
+                />
+            }
             <div className={classes.hello}>
                 Obsada
             </div>

@@ -12,14 +12,16 @@ function TvList(props) {
     const [Data, setData] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [CurrentPage, setCurrentPage] = useState(0);
+    const [TotalPages, setTotalPages] = useState(0);
 
     async function fetchData(endpoint) {
         await fetch(endpoint)
             .then(result => result.json())
             .then(result => {
-                setData([...Data, ...result.results])
-                setCurrentPage(result.page)
-                setLoading(false)
+                setData([...Data, ...result.results]);
+                setTotalPages(result.total_pages);
+                setCurrentPage(result.page);
+                setLoading(false);
             })
             .catch(error => console.error('Error:', error));
     };
@@ -55,7 +57,10 @@ function TvList(props) {
             </Grid>
             <br />
             <Box display="flex" justifyContent="center" my={3} flexGrow={1}>
-                <Button onClick={handleLoadMore} variant="contained" color="primary">Załaduj więcej</Button>
+                {CurrentPage !== TotalPages
+                    ? <Button onClick={handleLoadMore} variant="contained" color="primary">Załaduj więcej</Button>
+                    : <Button variant="contained" disabled>Załaduj więcej</Button>
+                }
             </Box>
         </div>
     );

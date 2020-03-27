@@ -6,12 +6,18 @@ import ScrollTop from '../Nav/Sections/ScrollTop';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        maxWidth: '1000px',
+        maxWidth: '350px',
+        [theme.breakpoints.up('sm')]: {
+            maxWidth: '600px',
+        },
+        [theme.breakpoints.up('md')]: {
+            maxWidth: '960px',
+        },
         [theme.breakpoints.up('xl')]: {
-            maxWidth: '2000px',
+            maxWidth: '1920px',
         },
         margin: '0 auto',
-        padding: theme.spacing(1),
+        overflow: 'hidden',
     },
 }));
 

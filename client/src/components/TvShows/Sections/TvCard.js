@@ -12,8 +12,11 @@ import textTurncate from '../../../actions/textTruncate';
 const useStyles = makeStyles(theme => ({
     root: {
         margin: '0 auto',
-        display: 'flex',
-        width: '460px',
+        width: '350px',
+        [theme.breakpoints.up('sm')]: {
+            display: 'flex',
+            width: '460px',
+        },
     },
     avatar: {
         position: 'absolute',
@@ -30,25 +33,37 @@ const useStyles = makeStyles(theme => ({
     divider: {
         margin: '5px 0',
     },
-    details: {
-        display: 'flex',
-        flexDirection: 'column',
+    poster: {
+        width: '350px',
+        height: '525px',
+        [theme.breakpoints.up('sm')]: {
+            width: '195px',
+            height: '292px',
+        },
     },
     info: {
         position: 'relative',
-        width: '265px',
-        height: '310px'
+        width: '350px',
+        height: '230px',
+        [theme.breakpoints.up('sm')]: {
+            width: '265px',
+            height: '292px',
+        },
     },
     linkDetails: {
         position: 'absolute',
         bottom: '0',
         left: '0',
-        width: '265px',
+        width: '350px',
+        [theme.breakpoints.up('sm')]: {
+            width: '265px',
+        },
         paddingTop: theme.spacing(2),
     },
     link_button: {
+        height: '40px',
         borderRadius: '0px',
-    }
+    },
 }));
 
 function TvCard(props) {
@@ -73,15 +88,14 @@ function TvCard(props) {
                     </Avatar>
                     <CardMedia
                         component='img'
-                        width='195px'
-                        height='310px'
+                        className={classes.poster}
                         image={props.image ? props.image : 'noPoster.png'}
                         title={props.title}
                     />
                 </CardActionArea>
                 <div className={classes.details}>
                     <CardContent className={classes.info}>
-                        <Typography gutterBottom variant="subtitle1" className={classes.title}>
+                        <Typography variant="subtitle1" className={classes.title}>
                             {props.title}
                         </Typography>
                         <Divider className={classes.divider} />

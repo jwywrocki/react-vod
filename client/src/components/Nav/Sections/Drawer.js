@@ -52,7 +52,7 @@ function Drawer() {
             <List>
                 <ListItemLink link="/movies" primary="Filmy" icon={<TheatersIcon />} />
                 <ListItemLink link="/tv" primary="Seriale" icon={<TvIcon />} />
-                <ListItemLink link="/" primary="Osoby" icon={<PeopleIcon />} />
+                <ListItemLink link="/persons" primary="Osoby" icon={<PeopleIcon />} />
                 <Divider />
                 <Box className={classes.inout}>
                     <InOut />

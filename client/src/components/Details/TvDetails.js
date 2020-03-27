@@ -55,24 +55,23 @@ function TvDetails(props) {
     }, [props.match.params.tvId])
     return (
         <div>
-            <div id='back-to-top-anchor'>
-                <ScrollTop />
-                <CssBaseline />
-                {Tv &&
-                    <BackImage
-                        vid_id={`${Tv.id}`}
-                        image={`${IMAGE_URL}w1280${Tv.backdrop_path && Tv.backdrop_path}`}
-                        poster={`${IMAGE_URL}w500${Tv.poster_path && Tv.poster_path}`}
-                        title={Tv.name}
-                        originalTitle={Tv.original_name}
-                        text={Tv.overview ? Tv.overview : `Przepraszamy nie posiadamy opisu do serialu: "${Tv.name}" w języku polskim.`}
-                        grade={Tv.vote_average}
-                        type_vid={`tv`}
-                        video={Vid ? Vid.key : null}
-                        genres={Genres}
-                    />
-                }
-            </div>
+            <div id='back-to-top-anchor'></div>
+            <ScrollTop />
+            <CssBaseline />
+            {Tv &&
+                <BackImage
+                    vid_id={`${Tv.id}`}
+                    image={`${IMAGE_URL}w1280${Tv.backdrop_path && Tv.backdrop_path}`}
+                    poster={`${IMAGE_URL}w500${Tv.poster_path && Tv.poster_path}`}
+                    title={Tv.name}
+                    originalTitle={Tv.original_name}
+                    text={Tv.overview ? Tv.overview : `Przepraszamy nie posiadamy opisu do serialu: "${Tv.name}" w języku polskim.`}
+                    grade={Tv.vote_average}
+                    type_vid={`tv`}
+                    video={Vid ? Vid.key : null}
+                    genres={Genres}
+                />
+            }
             <div className={classes.hello}>
                 Informacje o serialu "{Tv.name}"
             </div>

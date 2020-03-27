@@ -52,14 +52,13 @@ function TvTabs() {
 
     return (
         <div>
+            <div id="back-to-top-anchor"></div>
             <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor="none"
+                indicatorColor="primary"
                 variant="fullWidth"
-                textColor="primary"
                 centered
-                id="back-to-top-anchor"
             >
                 <Tab icon={<PopularityIcon />} label="Popularne seriale" {...tabProps(0)} />
                 <Tab icon={<GradeIcon />} label="Najwyżej oceniane" {...tabProps(1)} />

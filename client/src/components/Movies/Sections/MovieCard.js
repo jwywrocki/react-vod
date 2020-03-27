@@ -12,8 +12,11 @@ import textTurncate from '../../../actions/textTruncate';
 const useStyles = makeStyles(theme => ({
     root: {
         margin: '0 auto',
-        display: 'flex',
-        width: '460px',
+        width: '350px',
+        [theme.breakpoints.up('sm')]: {
+            display: 'flex',
+            width: '460px',
+        },
     },
     avatar: {
         position: 'absolute',
@@ -34,19 +37,35 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
     },
+    poster: {
+        width: '350px',
+        height: '525px',
+        [theme.breakpoints.up('sm')]: {
+            width: '195px',
+            height: '292px',
+        },
+    },
     info: {
         position: 'relative',
-        width: '265px',
-        height: '310px'
+        width: '350px',
+        height: '230px',
+        [theme.breakpoints.up('sm')]: {
+            width: '265px',
+            height: '292px',
+        },
     },
     linkDetails: {
         position: 'absolute',
         bottom: '0',
         left: '0',
-        width: '265px',
+        width: '350px',
+        [theme.breakpoints.up('sm')]: {
+            width: '265px',
+        },
         paddingTop: theme.spacing(2),
     },
     link_button: {
+        height: '40px',
         borderRadius: '0px',
     },
 }));
@@ -54,7 +73,7 @@ const useStyles = makeStyles(theme => ({
 function MovieCard(props) {
     const classes = useStyles();
     return (
-        <Grid item sm={12} md={6} xl={3}>
+        <Grid item xs={12} sm={12} md={6} xl={3}>
             <Card className={classes.root} raised>
                 <CardActionArea href={`/movie/${props.id}`}>
                     <Avatar className={classes.avatar}>
@@ -72,15 +91,14 @@ function MovieCard(props) {
                     </Avatar>
                     <CardMedia
                         component='img'
-                        width='195px'
-                        height='310px'
+                        className={classes.poster}
                         image={props.image ? props.image : 'noPoster.png'}
                         title={props.title}
                     />
                 </CardActionArea>
                 <div className={classes.details}>
                     <CardContent className={classes.info}>
-                        <Typography gutterBottom variant="subtitle1">
+                        <Typography variant="subtitle1">
                             {props.title}
                         </Typography>
                         <Typography gutterBottom variant="subtitle2" color="textSecondary">

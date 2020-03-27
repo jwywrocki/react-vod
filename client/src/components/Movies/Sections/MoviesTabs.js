@@ -52,14 +52,13 @@ function MovieTabs() {
 
     return (
         <div>
+            <div id="back-to-top-anchor"></div>
             <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor="none"
+                indicatorColor="primary"
                 variant="fullWidth"
-                textColor="primary"
                 centered
-                id="back-to-top-anchor"
             >
                 <Tab icon={<PopularityIcon />} label="Popularne filmy" {...tabProps(0)} />
                 <Tab icon={<GradeIcon />} label="Najwyżej oceniane" {...tabProps(1)} />
@@ -76,7 +75,7 @@ function MovieTabs() {
                 <MovieList type={"upcoming"} region={"&region=US"} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <MovieList type={"now_playing"} region={""} />
+                <MovieList type={"now_playing"} region={"&region=PL"} />
             </TabPanel>
         </div>
     );

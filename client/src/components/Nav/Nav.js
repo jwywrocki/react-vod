@@ -68,7 +68,7 @@ function Nav(props) {
         <Box className={classes.links}>
           <ListItemLink link="/movies" primary="Filmy" />
           <ListItemLink link="/tv" primary="Seriale" />
-          <ListItemLink link="/" primary="Osoby" />
+          <ListItemLink link="/persons" primary="Osoby" />
         </Box>
         <SearchBar />
         <Box className={classes.inOut}>

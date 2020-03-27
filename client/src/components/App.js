@@ -14,10 +14,12 @@ import Register from "./Register/Register";
 // import Search from "./Search/Search";
 import Nav from "./Nav/Nav";
 import Footer from "./Footer/Footer";
-import MovieDetails from "./Details/MovieDetails";
-import TvDetails from "./Details/TvDetails";
 import Movies from "./Movies/Movies";
+import MovieDetails from "./Details/MovieDetails";
 import TvShows from "./TvShows/TvShows";
+import TvDetails from "./Details/TvDetails";
+import Persons from "./Persons/Persons";
+import PersonDetails from "./Details/PersonDetails";
 
 function App() {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
@@ -48,8 +50,10 @@ function App() {
         <Route exact path="/register" component={Auth(Register, false)} />
         <Route exact path="/movies" component={Auth(Movies, null)} />
         <Route exact path="/tv" component={Auth(TvShows, null)} />
+        <Route exact path="/persons" component={Auth(Persons, null)} />
         <Route exact path="/movie/:movieId" component={Auth(MovieDetails, null)} />
         <Route exact path="/tv/:tvId" component={Auth(TvDetails, null)} />
+        <Route exact path="/person/:personId" component={Auth(PersonDetails, null)} />
         {/* <Route exact path="/search/:query" component={Auth(Search), null} /> */}
       </Switch>
 
