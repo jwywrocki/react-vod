@@ -19,18 +19,17 @@ function MovieList(props) {
                 setData([...Data, ...result.results]);
                 setCurrentPage(result.page);
                 setLoading(false);
-                console.log(result);
             })
             .catch(error => console.error('Error:', error));
     };
 
     useEffect(() => {
-        const endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl&page=1`;
+        const endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl${props.region}&page=1`;
         fetchData(endpoint);
     }, []);
 
     const handleLoadMore = () => {
-        let endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl&page=${CurrentPage + 1}`;
+        let endpoint = `${API_URL}movie/${props.type}?api_key=${API_KEY}&language=pl${props.region}&page=${CurrentPage + 1}`;
         fetchData(endpoint);
     }
     return (
@@ -45,12 +44,11 @@ function MovieList(props) {
                     <React.Fragment key={index}>
                         <MovieCard
                             image={data.poster_path && `${IMAGE_URL}w500${data.poster_path}`}
-                            Id={data.id}
-                            Title={data.title}
-                            Pop={data.popularity}
-                            Votes={data.vote_count}
-                            Rate={data.vote_average}
-                            ReDate={data.release_date}
+                            id={data.id}
+                            title={data.title}
+                            rate={data.vote_average}
+                            overview={data.overview}
+                            premiere={data.release_date}
                         />
                     </React.Fragment>
                 ))}

@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-    CardActionArea, CardMedia, Button, Typography, Grid, List, ListItem,
-    Card, CardContent, Box, ListItemIcon, ListItemText
+    CardActionArea, CardMedia, Button, Typography, Grid,
+    Card, CardContent, Box, Divider, Avatar, CircularProgress
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import PopularityIcon from '@material-ui/icons/TrendingUp';
-import VotesIcon from '@material-ui/icons/Poll';
-import GradeIcon from '@material-ui/icons/Grade';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import InfoIcon from '@material-ui/icons/Info';
+
+import textTurncate from '../../../actions/textTruncate';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,20 +15,29 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         width: '460px',
     },
-    title: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
+    avatar: {
+        position: 'absolute',
+        top: '5px',
+        left: '5px',
+        width: '40px',
+        height: '40px',
+        backgroundColor: theme.palette.text.primary,
+    },
+    value: {
+        fontWeight: 'bold',
+        fontSize: '14px',
+    },
+    divider: {
+        margin: '5px 0',
     },
     details: {
         display: 'flex',
         flexDirection: 'column',
     },
-    details_desc: {
-        fontSize: `11px !important`,
-    },
     info: {
         position: 'relative',
         width: '265px',
-        height: '301px'
+        height: '310px'
     },
     linkDetails: {
         position: 'absolute',
@@ -50,48 +57,41 @@ function TvCard(props) {
     return (
         <Grid item sm={12} md={6} xl={3}>
             <Card className={classes.root} raised>
-                <CardActionArea href={`/tv/${props.Id}`}>
+                <CardActionArea href={`/tv/${props.id}`}>
+                    <Avatar className={classes.avatar}>
+                        <CircularProgress
+                            style={{ position: "absolute" }}
+                            variant="static"
+                            value={props.rate * 10}
+                            color="primary"
+                            size={35}
+                            thickness={6}
+                        />
+                        <span className={classes.value}>
+                            {props.rate}
+                        </span>
+                    </Avatar>
                     <CardMedia
                         component='img'
-                        width='200px'
-                        height='301px'
-                        image={props.image}
-                        title={props.Title}
+                        width='195px'
+                        height='310px'
+                        image={props.image ? props.image : 'noPoster.png'}
+                        title={props.title}
                     />
                 </CardActionArea>
                 <div className={classes.details}>
                     <CardContent className={classes.info}>
                         <Typography gutterBottom variant="subtitle1" className={classes.title}>
-                            {props.Title}
+                            {props.title}
                         </Typography>
-                        <List dense>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <PopularityIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={`Popularność: ${props.Pop}`} disableTypography />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <VotesIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={`Głosów: ${props.Votes}`} disableTypography />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <GradeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={`Ocena: ${props.Rate}`} disableTypography />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <ScheduleIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={`Publikacja: ${props.ReDate}`} disableTypography />
-                            </ListItem>
-                        </List>
+                        <Divider className={classes.divider} />
+                        <Typography variant="body2">
+                            {props.overview
+                                ? textTurncate(`${props.overview}`, 25, '...')
+                                : `Przepraszamy nie posiadamy opisu do serialu: "${props.title}" w języku polskim.`}
+                        </Typography>
                         <Box className={classes.linkDetails}>
-                            <Button className={classes.link_button} href={`/tv/${props.Id}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
+                            <Button className={classes.link_button} href={`/tv/${props.id}`} variant="contained" fullWidth color="primary" size="large" endIcon={<InfoIcon />}>
                                 Więcej informacji
                         </Button>
                         </Box>

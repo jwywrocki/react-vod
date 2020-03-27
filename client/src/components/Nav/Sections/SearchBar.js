@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     },
     inputInput: {
         [theme.breakpoints.down('sm')]: {
-            width: '150px',
+            width: '130px',
         },
         padding: theme.spacing(1, 1, 1, 7),
     },

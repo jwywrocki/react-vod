@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-    Typography, CssBaseline, Grid, makeStyles, Modal,
-    Divider, IconButton, Avatar, CircularProgress, Card, Button
+    Typography, CssBaseline, Grid, makeStyles, Modal, Tooltip,
+    Divider, IconButton, Avatar, CircularProgress, Card, Chip
 } from '@material-ui/core';
 
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
@@ -93,6 +93,9 @@ function BackImage(props) {
         setOpen(false);
     };
 
+    const handleClick = () => {
+        console.info('Gatunek kliknięty.');
+    };
     return (
         <div>
             <div style={{
@@ -136,21 +139,27 @@ function BackImage(props) {
                                 <Grid item xs={12} md={12}>
                                     <Divider className={classes.divider} />
                                     <Grid item xs={12} md={12} align="center">
-                                        <IconButton className={classes.control_buttons}>
-                                            <FavoriteIcon className={classes.control_icons} />
-                                        </IconButton>
-                                        <IconButton className={classes.control_buttons}>
-                                            <StarIcon className={classes.control_icons} />
-                                        </IconButton>
-                                        <IconButton className={classes.control_buttons}>
-                                            <BookmarkIcon className={classes.control_icons} />
-                                        </IconButton>
-                                        <IconButton className={classes.control_buttons} onClick={handleOpen} >
-                                            <PlayCircleIcon className={classes.control_icons} />
-                                        </IconButton>
+                                        <Tooltip title="Dodaj do ulubionych" arrow>
+                                            <IconButton className={classes.control_buttons}>
+                                                <FavoriteIcon className={classes.control_icons} />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Oceń" arrow>
+                                            <IconButton className={classes.control_buttons}>
+                                                <StarIcon className={classes.control_icons} />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Dodaj do zakładek" arrow>
+                                            <IconButton className={classes.control_buttons}>
+                                                <BookmarkIcon className={classes.control_icons} />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="Odtwarzaj zwiastun" arrow>
+                                            <IconButton className={classes.control_buttons} onClick={handleOpen} >
+                                                <PlayCircleIcon className={classes.control_icons} />
+                                            </IconButton>
+                                        </Tooltip>
                                         <Modal
-                                            aria-labelledby="simple-modal-title"
-                                            aria-describedby="simple-modal-description"
                                             open={open}
                                             onClose={handleClose}
                                         >
@@ -184,14 +193,13 @@ function BackImage(props) {
                                     <Divider className={classes.divider} />
                                     <Grid item xs={12} md={12}>
                                         {props.genres.map((genres, index) => (
-                                            <Button
+                                            <Chip
                                                 className={classes.genres}
-                                                variant="contained"
                                                 color="primary"
-                                                size="small"
                                                 key={index}
-                                            >{genres.name}
-                                            </Button>
+                                                label={genres.name}
+                                                onClick={handleClick}
+                                            />
                                         ))}
                                     </Grid>
                                 </Grid>

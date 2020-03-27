@@ -36,9 +36,6 @@ const useStyles = makeStyles(theme => ({
     height: '50px',
     justifyContent: "center",
   },
-  link: {
-    margin: theme.spacing(1, 1),
-  },
   links: {
     display: 'flex',
     flexDirection: 'row',
@@ -55,8 +52,6 @@ const useStyles = makeStyles(theme => ({
     drawer: {
       display: 'none',
     },
-  },
-  darkLight: {
   },
 }));
 

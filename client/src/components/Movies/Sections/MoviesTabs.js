@@ -44,7 +44,7 @@ function tabProps(index) {
     };
 }
 
-function MovieTabs(props) {
+function MovieTabs() {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -55,7 +55,9 @@ function MovieTabs(props) {
             <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor="primary"
+                indicatorColor="none"
+                variant="fullWidth"
+                textColor="primary"
                 centered
                 id="back-to-top-anchor"
             >
@@ -65,16 +67,16 @@ function MovieTabs(props) {
                 <Tab icon={<TheatersIcon />} label="Obecnie w kinach" {...tabProps(3)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <MovieList type={"popular"} />
+                <MovieList type={"popular"} region={""} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <MovieList type={"top_rated"} />
+                <MovieList type={"top_rated"} region={""} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <MovieList type={"upcoming"} />
+                <MovieList type={"upcoming"} region={"&region=US"} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <MovieList type={"now_playing"} />
+                <MovieList type={"now_playing"} region={""} />
             </TabPanel>
         </div>
     );

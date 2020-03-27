@@ -45,12 +45,10 @@ function TvList(props) {
                     <React.Fragment key={index}>
                         <TvCard
                             image={data.poster_path && `${IMAGE_URL}w500${data.poster_path}`}
-                            Id={data.id}
-                            Title={data.name}
-                            Pop={data.popularity}
-                            Votes={data.vote_count}
-                            Rate={data.vote_average}
-                            ReDate={data.first_air_date}
+                            id={data.id}
+                            title={data.name}
+                            rate={data.vote_average}
+                            overview={data.overview}
                         />
                     </React.Fragment>
                 ))}

@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import IconButton from '@material-ui/core/IconButton';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import { useDarkMode } from '../actions/useDarkMode';
 
@@ -22,18 +19,8 @@ import TvDetails from "./Details/TvDetails";
 import Movies from "./Movies/Movies";
 import TvShows from "./TvShows/TvShows";
 
-const useStyles = makeStyles(theme => ({
-  darkLight: {
-    position: 'sticky',
-    top: '65px',
-    zIndex: '1',
-  },
-}));
-
-function App(props) {
-  const classes = useStyles();
+function App() {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
-  console.log(theme);
   const themeMode = theme === 'light'
     ? createMuiTheme({
       palette: {

@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { logoutUser } from "../../../actions/user_actions";
 
 function ListItemLink(props) {
-    const { center, icon, primary, link } = props;
+    const { center, primary, link } = props;
 
     const renderLink = React.useMemo(
         () => React.forwardRef((itemProps, ref) => <RouterLink to={link} ref={ref} {...itemProps} />),
@@ -39,10 +39,6 @@ function InOut(props) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
     const auth = (user.userData && !user.userData.isAuth);
-
-    console.log('isAuth: ', (user.userData && !user.userData.isAuth));
-    console.log('auth: ', auth);
-    console.log('user: ', user);
 
     const logoutHandler = () => {
         dispatch(logoutUser()).then(response => {

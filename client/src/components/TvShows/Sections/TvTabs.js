@@ -44,7 +44,7 @@ function tabProps(index) {
     };
 }
 
-function TvTabs(props) {
+function TvTabs() {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -55,7 +55,9 @@ function TvTabs(props) {
             <Tabs
                 value={value}
                 onChange={handleChange}
-                indicatorColor="primary"
+                indicatorColor="none"
+                variant="fullWidth"
+                textColor="primary"
                 centered
                 id="back-to-top-anchor"
             >
