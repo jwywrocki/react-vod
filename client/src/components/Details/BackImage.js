@@ -5,10 +5,13 @@ import {
     Divider, IconButton, Avatar, CircularProgress, Card, Chip
 } from '@material-ui/core';
 
-import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
-import StarIcon from '@material-ui/icons/StarBorder';
-import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
-import PlayCircleIcon from '@material-ui/icons/PlayCircleOutline';
+import FavoriteIconO from '@material-ui/icons/FavoriteBorder';
+//import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarIconO from '@material-ui/icons/StarBorder';
+//import StarIcon from '@material-ui/icons/Star';
+import BookmarkIconO from '@material-ui/icons/BookmarkBorder';
+//import BookmarkIcon from '@material-ui/icons/Bookmark';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
@@ -141,22 +144,22 @@ function BackImage(props) {
                                     <Grid item xs={12} md={12} align="center">
                                         <Tooltip title="Dodaj do ulubionych" arrow>
                                             <IconButton className={classes.control_buttons}>
-                                                <FavoriteIcon className={classes.control_icons} />
+                                                <FavoriteIconO className={classes.control_icons} />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Oceń" arrow>
                                             <IconButton className={classes.control_buttons}>
-                                                <StarIcon className={classes.control_icons} />
+                                                <StarIconO className={classes.control_icons} />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Dodaj do zakładek" arrow>
                                             <IconButton className={classes.control_buttons}>
-                                                <BookmarkIcon className={classes.control_icons} />
+                                                <BookmarkIconO className={classes.control_icons} />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Odtwarzaj zwiastun" arrow>
                                             <IconButton className={classes.control_buttons} onClick={handleOpen} >
-                                                <PlayCircleIcon className={classes.control_icons} />
+                                                <YouTubeIcon className={classes.control_icons} />
                                             </IconButton>
                                         </Tooltip>
                                         <Modal
