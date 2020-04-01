@@ -19,25 +19,22 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: 'calc(100% - 30px)',
         padding: theme.spacing(1),
-        [theme.breakpoints.up('sm')]: {
-            padding: theme.spacing(2),
-        },
     },
     grid: {
         margin: '0 auto',
-        maxWidth: '900px',
+        maxWidth: '1300px',
     },
     col1: {
-        margin: '0 auto',
-        maxWidth: '366px',
-        [theme.breakpoints.up('md')]: {
-            minWidth: '240px',
+        maxWidth: '200px',
+        [theme.breakpoints.down('xs')]: {
+            margin: '0 auto',
+            maxWidth: '366px',
         },
     },
     card: {
         [theme.breakpoints.up('sm')]: {
             position: 'sticky',
-            top: '93px',
+            top: '85px',
         }
     },
     poster: {
@@ -50,6 +47,7 @@ const useStyles = makeStyles(theme => ({
         padding: '5px',
     },
     cardInfo: {
+        fontSize: '12px',
         padding: '0 15px 15px 15px',
     },
     moviePoster: {
@@ -82,7 +80,7 @@ function PersonDetails(props) {
             <ScrollTop />
             <CssBaseline />
             <Grid container spacing={3} className={classes.grid}>
-                <Grid item xs={12} sm={4} className={classes.col1}>
+                <Grid item xs={12} sm={3} className={classes.col1}>
                     <Card className={classes.card} raised>
                         <CardMedia className={classes.cardImg}>
                             <img
@@ -115,42 +113,59 @@ function PersonDetails(props) {
                             }
                         </CardContent>
                         <CardContent className={classes.cardInfo}>
-                            <Typography variant="h6">Zawód</Typography>
+                            <Typography variant="subtitle1">Zawód</Typography>
                             {Person.known_for_department === 'Acting'
-                                ? <Typography variant="subtitle1" color="textSecondary">
+                                ? <Typography variant="subtitle2" color="textSecondary">
                                     {Person.gender === 1
                                         ? 'Aktorka'
                                         : 'Aktor'
                                     }
                                 </Typography>
-                                : <Typography variant="subtitle1" color="textSecondary">
+                                : <Typography variant="subtitle2" color="textSecondary">
                                     {Person.known_for_department}</Typography>
                             }
-                            <Typography variant="h6">Data urodzenia</Typography>
-                            <Typography variant="subtitle1" color="textSecondary">{Person.birthday}</Typography>
-                            <Typography variant="h6">Miejsce urodzenia</Typography>
-                            <Typography variant="subtitle1" color="textSecondary">{Person.place_of_birth}</Typography>
+                            <Typography variant="subtitle1">Data urodzenia</Typography>
+                            <Typography variant="subtitle2" color="textSecondary">
+                                {Person.birthday
+                                    ? Person.birthday
+                                    : 'Brak danych'
+                                }
+                            </Typography>
+                            <Typography variant="subtitle1">Miejsce urodzenia</Typography>
+                            <Typography variant="subtitle2" color="textSecondary">
+                                {Person.place_of_birth
+                                    ? Person.place_of_birth
+                                    : 'Brak danych'
+                                }
+                            </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={9}>
                     <Typography variant="h4"> {Person.name} </Typography>
-                    <Typography color="textSecondary" variant="h5"> {Person.birthday} </Typography>
+                    <Typography color="textSecondary" variant="h5">
+                        {Person.birthday}
+                    </Typography>
                     <Divider />
                     <Typography variant="h6"> Biografia </Typography>
-                    <Typography>{Person.biography}</Typography>
+                    <Typography>
+                        {Person.biography
+                            ? Person.biography
+                            : `Nie posiadamy biografii ${Person.name} w naszej bazie`
+                        }
+                    </Typography>
                     <Divider />
                     {Person.gender === 1
                         ? <Typography variant="h6"> Znana z</Typography>
                         : <Typography variant="h6"> Znany z</Typography>
                     }
-                    <GridList component="div" spacing={15} cols={0} cellHeight={'278'}>
+                    <GridList component="div" spacing={15} cols={0} cellHeight={278}>
                         {Cast && Cast.map((data, index) => (
 
                             <GridListTile key={index} className={classes.moviePoster}>
                                 {data.poster_path !== null
-                                    ? <img src={`${IMAGE_URL}w185${data.poster_path}`} />
-                                    : <img src="../noPoster.png" />
+                                    ? <img src={`${IMAGE_URL}w185${data.poster_path}`} alt='poster' />
+                                    : <img src="../noPoster.png" alt='poster' />
                                 }
                                 <GridListTileBar
                                     title={data.title ? data.title : data.original_name}
